@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { cn } from "@/lib/utils";
+import { cn, type TSlider } from "@/lib/utils";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -10,37 +10,18 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import { Pagination } from "swiper/modules";
+import { GetStrapiImage } from "@/lib/strapi-image";
 
-export function Hero() {
-  const data = [
-    {
-      title: "Hlavný nadpis banneru",
-      subtitle: "Podnadpis banneru",
-      description:
-        "ZSS Rosa poskytuje odbornú starostlivosť osobám s telesným, mentálnym postihnutím či pervazívnymi poruchami formou ambulantných a pobytových služieb.",
-    },
-    {
-      title: "Hlavný nadpis banneru - 2",
-      subtitle: "Podnadpis banneru",
-      description:
-        "ZSS Rosa poskytuje odbornú starostlivosť osobám s telesným, mentálnym postihnutím či pervazívnymi poruchami formou ambulantných a pobytových služieb.",
-    },
-    {
-      title: "Hlavný nadpis banneru - 3",
-      subtitle: "Podnadpis banneru",
-      description:
-        "ZSS Rosa poskytuje odbornú starostlivosť osobám s telesným, mentálnym postihnutím či pervazívnymi poruchami formou ambulantných a pobytových služieb.",
-    },
-  ];
-
+export function Hero({ slides }: { slides: TSlider[] }) {
   return (
     <section className={cn("custom-section", "pt-10 lg:pt-12 bg-primary/10")}>
       <Swiper
         pagination={true}
         modules={[Pagination]}
-        className={cn("custom-container", "mySwiper", 'hero-swiper')}
+        loop={true}
+        className={cn("custom-container", "mySwiper", "hero-swiper")}
       >
-        {data.map((slide) => (
+        {slides.map((slide) => (
           <SwiperSlide
             key={slide.title}
             className={cn(
@@ -50,7 +31,7 @@ export function Hero() {
           >
             <div className="w-full flex flex-col items-start justify-start gap-5 sm:gap-6 relative z-10 pt-[336px]">
               <div className="flex flex-col items-start justify-start gap-2 sm:gap-3">
-                <h4 className="py-0.5 px-1 bg-primary text-sm sm:text-base font-bold">
+                <h4 className="py-0.5 px-1 bg-primary text-sm sm:text-base font-bold uppercase">
                   {slide.subtitle}
                 </h4>
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white">
@@ -65,7 +46,7 @@ export function Hero() {
               )}
             />
             <Image
-              src={"/placeholder.png"}
+              src={GetStrapiImage(slide.image.url) ?? "/placeholder.png"}
               alt={slide.title}
               width={0}
               height={0}
