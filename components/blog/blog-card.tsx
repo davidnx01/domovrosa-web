@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import { Paragraph } from "../ui/paragraph";
 import { Button } from "../ui/button";
+import { GetStrapiImage } from "@/lib/strapi-image";
 
 export function BlogCard({ blog }: { blog: TBlog }) {
   return (
@@ -23,7 +24,7 @@ export function BlogCard({ blog }: { blog: TBlog }) {
         )}
         <div className="absolute w-full h-full inset-0 z-[1] bg-black/20" />
         <Image
-          src={blog.image}
+          src={GetStrapiImage(blog.image.url)}
           alt={blog.name}
           width={0}
           height={0}

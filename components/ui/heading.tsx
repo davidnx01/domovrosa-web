@@ -21,7 +21,7 @@ export function Heading({ title, subtitle, className }: HeadingProps) {
       {subtitle && (
         <h4
           className={cn(
-            "py-0.5 px-1 bg-primary text-sm sm:text-base font-bold uppercase",
+            "py-0.5 px-2 bg-primary text-sm sm:text-base font-bold uppercase",
             className?.subtitle
           )}
         >

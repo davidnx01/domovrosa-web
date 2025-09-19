@@ -6,6 +6,8 @@ import { Blogs } from "@/components/homepage/blogs";
 import { Hero } from "@/components/homepage/hero";
 import { Services } from "@/components/homepage/services";
 import { fetchData } from "@/lib/api";
+import { TAboutSection, TBlogSection } from "@/types/sections";
+import { TBlog } from "@/types/blog";
 
 export default async function Home() {
   const slider = (await fetchData("slider", {
@@ -13,18 +15,29 @@ export default async function Home() {
   })) as THomepageSlider;
 
   const serviceSection = (await fetchData("service-section", {
-    populate: [
-      "heading",
-      "services.icon",
-    ],
+    populate: ["heading", "services.icon"],
   })) as TServiceSection;
+
+  const aboutSection = (await fetchData("about-section", {
+    populate: ["heading", "image", "benefits"],
+  })) as TAboutSection;
+
+  const blogSection = (await fetchData("blog-section", {
+    populate: ["heading"],
+  })) as TBlogSection;
+
+  const blogs = (await fetchData("fotogalleries", {
+    populate: ['image', 'fotogallery_category'],
+    sort: "publishedAt:asc",
+    pagination: { pageSize: 3 },
+  })) as TBlog[];
 
   return (
     <main>
       <Hero slides={slider.slides} />
       <Services section={serviceSection} />
-      <About />
-      <Blogs />
+      <About section={aboutSection} />
+      <Blogs section={blogSection} blogs={blogs} />
     </main>
   );
 }

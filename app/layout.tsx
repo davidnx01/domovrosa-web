@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
 
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { fetchGeneral } from "@/lib/api";
 import { TGeneral } from "@/types/general";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const font = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -27,13 +24,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const general = await fetchGeneral() as TGeneral;
+  const general = (await fetchGeneral()) as TGeneral;
 
   return (
     <html lang="sk">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${font.variable} ${font.className} antialiased`}>
         <Header general={general} />
         {children}
         <Footer general={general} />
