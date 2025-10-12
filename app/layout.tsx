@@ -6,6 +6,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { fetchGeneral } from "@/lib/api";
 import { TGeneral } from "@/types/general";
+import { AppProvider } from "@/components/ui/app-provider";
 
 const font = Poppins({
   variable: "--font-poppins",
@@ -29,9 +30,11 @@ export default async function RootLayout({
   return (
     <html lang="sk">
       <body className={`${font.variable} ${font.className} antialiased`}>
-        <Header general={general} />
-        {children}
-        <Footer general={general} />
+        <AppProvider>
+          <Header general={general} />
+          {children}
+          <Footer general={general} />
+        </AppProvider>
       </body>
     </html>
   );

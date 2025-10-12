@@ -1,17 +1,17 @@
 import type { TStrapiData } from "@/lib/api";
 import type { TImage } from "@/lib/utils";
 
-export type TBlogCategory = {
+export type TGalleryCategory = {
   id: number;
   name: string;
   slug: string;
 };
 
-export type TBlog = TStrapiData & {
+export type TGallery = TStrapiData & {
   id: number;
   name: string;
   slug: string;
-  category: TBlogCategory;
+  fotogallery_category: TGalleryCategory;
   image: TImage;
   content: string;
 }

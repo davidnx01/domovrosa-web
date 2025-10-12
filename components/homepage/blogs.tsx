@@ -3,14 +3,14 @@
 import Link from "next/link";
 
 import type { TBlogSection } from "@/types/sections";
-import type { TBlog } from "@/types/blog";
+import type { TGallery } from "@/types/gallery";
 
 import { cn } from "@/lib/utils";
 import { Heading } from "../ui/heading";
 import { Button } from "../ui/button";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { BlogCard } from "../blog/blog-card";
+import { GalleryCard } from "../gallery/gallery-card";
 
 import "swiper/css";
 
@@ -19,10 +19,8 @@ export function Blogs({
   blogs,
 }: {
   section: TBlogSection;
-  blogs: TBlog[];
+  blogs: TGallery[];
 }) {
-  console.log(blogs);
-
   return (
     <section className={cn("custom-section", "pb-16 sm:pb-20 lg:pb-24 pt-8")}>
       <div
@@ -57,7 +55,7 @@ export function Blogs({
         >
           {blogs.map((blog) => (
             <SwiperSlide key={blog.slug} className="max-w-[410px] w-full">
-              <BlogCard key={blog.slug} blog={blog} />
+              <GalleryCard key={blog.slug} gallery={blog} />
             </SwiperSlide>
           ))}
         </Swiper>

@@ -46,3 +46,19 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
         pagination: { pageSize: 10 },
       }),
   });
+
+
+
+  queryKey: ["fotogalleries", activeTab],
+    queryFn: () =>
+      fetchClientData<{
+        data: TGallery[];
+        meta: TMeta;
+      }>("fotogalleries", {
+        populate: ["image", "fotogallery_category"],
+        pagination: { pageSize: 8 },
+        filters:
+          activeTab !== "all"
+            ? { fotogallery_category: { slug: { $eq: activeTab } } }
+            : undefined,
+      }),

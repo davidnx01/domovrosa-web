@@ -7,7 +7,7 @@ import { Hero } from "@/components/homepage/hero";
 import { Services } from "@/components/homepage/services";
 import { fetchData } from "@/lib/api";
 import { TAboutSection, TBlogSection } from "@/types/sections";
-import { TBlog } from "@/types/blog";
+import { TBlog } from "@/types/gallery";
 
 export default async function Home() {
   const slider = (await fetchData("slider", {

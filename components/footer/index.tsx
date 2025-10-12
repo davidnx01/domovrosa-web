@@ -13,9 +13,9 @@ import { MdOutlinePhoneInTalk } from "react-icons/md";
 import { BsEnvelopeAt } from "react-icons/bs";
 
 export async function Footer({ general }: { general: TGeneral }) {
-  const footerSection = (await fetchData("footer-section", {
-    populate: ["heading", "partners", "partners.image", "menus", "menus.items"],
-  })) as TFooterSection;
+const footerSection = (await fetchData("footer-section", {
+  populate: ["heading", "partners", "partners.image", "menus", "menus.items"],
+})) as TFooterSection;
 
   return (
     <footer

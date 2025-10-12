@@ -16,11 +16,13 @@ export type TSEO = {
 export type TPage = TStrapiData & {
   heading: SubpageHeadingProps;
   seo: TSEO;
+  tabs: TTab[];
 };
 
-export type TTabs = TStrapiData & {
+export type TTab = TStrapiData & {
   name: string;
   content: string;
   image: TImage;
   images: TImage[];
+  files: TImage[];
 }

@@ -7,9 +7,26 @@ export type TGeneral = {
   address: string;
   city: string;
   post_code: string;
+  company_name: string;
+  company_address: string;
+  company_post_code: string;
+  company_city: string;
+  company_state: string;
+  ico: string;
+  dic: string;
 }
 
 export type THeading = {
   subtitle: string;
   title: string;
+}
+
+export type TMember = {
+  name: string;
+  role: string;
+  image: TImage;
+  phone_1: string;
+  phone_2: string;
+  email_1: string;
+  email_2: string;
 }
