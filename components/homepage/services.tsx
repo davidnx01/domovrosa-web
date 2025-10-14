@@ -30,7 +30,7 @@ export function Services({ section }: { section: TServiceSection }) {
               content={section.description}
               className="max-w-[766px] w-full"
             />
-            <Button className="hidden md:flex">Zobraziť služby</Button>
+            {/* <Button className="hidden md:flex">Zobraziť služby</Button> */}
           </div>
         </div>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-10 lg:gap-12">
@@ -38,9 +38,9 @@ export function Services({ section }: { section: TServiceSection }) {
             <ServiceCard key={service.name} service={service} />
           ))}
         </div>
-        <Button className="flex w-full sm:w-auto md:hidden">
+        {/* <Button className="flex w-full sm:w-auto md:hidden">
           Zobraziť služby
-        </Button>
+        </Button> */}
       </div>
     </section>
   );

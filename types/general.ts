@@ -1,4 +1,4 @@
-import { TImage } from "@/lib/utils"
+import { TImage } from "@/lib/utils";
 
 export type TGeneral = {
   logo: TImage;

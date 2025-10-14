@@ -100,7 +100,7 @@ export function GalleryList({ categories }: GalleryListProps) {
               ))
             ) : (
               <p className="w-full col-span-1 sm:col-span-2 lg:col-span-3 text-center mt-10 mb-40">
-                Žiadne galérie nenájdené.
+                Žiadne galérie neboli nenájdené.
               </p>
             )}
             {galleriesQuery.hasNextPage && (

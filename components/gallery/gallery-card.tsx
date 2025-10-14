@@ -21,7 +21,7 @@ export function GalleryCard({
     return (
       <Link
         prefetch={false}
-        href={`/${gallery.slug}`}
+        href={`/fotogaleria/${gallery.slug}`}
         className="w-full col-span-1 sm:col-span-2 lg:col-span-3 rounded-[8px] sm:rounded-[12px] lg:rounded-[16px] h-[600px] sm:h-[400px] lg:h-[530px] overflow-hidden flex flex-col items-start justify-end relative p-4 sm:p-8 md:p-10 lg:p-12 mb-0 sm:mb-4 lg:mb-6"
       >
         <div className="w-full flex flex-col items-start justify-start gap-4 relative z-10">
@@ -64,7 +64,7 @@ export function GalleryCard({
   return (
     <Link
       prefetch={false}
-      href={`/${gallery.slug}`}
+      href={`/fotogaleria/${gallery.slug}`}
       className="w-full col-span-1 rounded-[8px] overflow-hidden flex flex-col items-start justify-start"
     >
       <div className="w-full h-[220px] sm:h-[240px] relative overflow-hidden">

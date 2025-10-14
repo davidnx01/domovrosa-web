@@ -3,6 +3,7 @@ import { TStrapiData } from "@/lib/api";
 export type THeaderLink = {
   name: string;
   link: string;
+  isExternal?: boolean;
   childs?: THeaderLink[];
 }
 

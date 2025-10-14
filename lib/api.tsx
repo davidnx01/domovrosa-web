@@ -20,7 +20,7 @@
 type Primitive = string | number | boolean | null;
 
 export type TStrapiData = {
-  id?: number;
+  id: number;
   documentId?: string;
   createdAt?: string;
   updatedAt?: string;
@@ -198,8 +198,6 @@ export async function fetchClientData<T>(
     const json = await res.json();
     return json;
   } catch (err) {
-    // Helpful console error for debugging CORS / network problems in the browser
-    // (React Query will still surface the error to your UI)
     console.error("[fetchClientData] error fetching", url, err);
     throw err;
   }

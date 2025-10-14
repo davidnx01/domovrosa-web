@@ -31,7 +31,7 @@ export function Hero({ slides }: { slides: TSlider[] }) {
           >
             <div className="w-full flex flex-col items-start justify-start gap-5 sm:gap-6 relative z-10 pt-[336px]">
               <div className="flex flex-col items-start justify-start gap-2 sm:gap-3">
-                <h4 className="py-0.5 px-1 bg-primary text-sm sm:text-base font-bold uppercase">
+                <h4 className="py-0.5 px-2.5 bg-primary text-sm sm:text-base font-bold uppercase">
                   {slide.subtitle}
                 </h4>
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white">

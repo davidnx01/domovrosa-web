@@ -15,8 +15,11 @@ import { TGeneral } from "@/types/general";
 
 export async function Header({ general }: { general: TGeneral }) {
   const navigation = (await fetchData("navigation", {
-    populate: ["header_links.childs"],
+    populate: ["header_links.childs", "sidebar_links.childs"],
   })) as TNavigation;
+
+  const headerLinks = navigation.header_links;
+  const sidebarLinks = navigation.sidebar_links;
 
   return (
     <header
@@ -32,7 +35,7 @@ export async function Header({ general }: { general: TGeneral }) {
           "flex items-center justify-between gap-4"
         )}
       >
-        <DesktopSidebar />
+        <DesktopSidebar headerLinks={headerLinks} sidebarLinks={sidebarLinks} />
         <Link prefetch={false} href={"/"}>
           <Image
             src={GetStrapiImage(general.logo.url)}
@@ -49,7 +52,7 @@ export async function Header({ general }: { general: TGeneral }) {
         </Button>
       </div>
       <div className={cn("custom-container", "bg-black/15 h-[1px]")} />
-      <Navbar links={navigation.header_links} />
+      <Navbar links={headerLinks} />
     </header>
   );
 }

@@ -19,14 +19,21 @@ import { cn } from "@/lib/utils";
 
 export function Navbar({ links }: { links: THeaderLink[] }) {
   return (
-    <NavigationMenu viewport={false}>
+    <NavigationMenu viewport={false} className="hidden xl:flex">
       <NavigationMenuList>
         {links.map((link) => (
           <NavigationMenuItem key={link.name}>
             <NavigationMenuTrigger
               hasChilds={!!link.childs && link.childs.length > 0}
             >
-              {link.name}
+              <Link
+                prefetch={false}
+                href={link.link}
+                target={link.isExternal ? "_blank" : "_self"}
+                rel={link.isExternal ? "noopener noreferrer" : undefined}
+              >
+                {link.name}
+              </Link>
             </NavigationMenuTrigger>
             {link.childs && link.childs.length > 0 && (
               <NavigationMenuContent
@@ -61,7 +68,10 @@ function ListItem({
   return (
     <li {...props} className="w-full">
       <NavigationMenuLink asChild className="w-full">
-        <Link href={href} className="w-full flex flex-row items-center justify-between">
+        <Link
+          href={href}
+          className="w-full flex flex-row items-center justify-between"
+        >
           <div className="font-medium text-sm lg:text-base text-black whitespace-nowrap">
             {title}
           </div>

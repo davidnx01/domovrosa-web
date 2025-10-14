@@ -28,7 +28,7 @@ export function SubpageHeading({
           "flex flex-col items-start justify-start gap-4 sm:gap-5 relative z-10"
         )}
       >
-        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-black">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-black max-w-[900px] w-full">
           {title}
         </h2>
         {description && (
