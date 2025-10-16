@@ -62,3 +62,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
             ? { fotogallery_category: { slug: { $eq: activeTab } } }
             : undefined,
       }),
+
+
+
+            <InvoicesList categories={categories} />
