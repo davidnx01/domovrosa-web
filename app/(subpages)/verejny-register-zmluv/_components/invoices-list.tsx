@@ -105,6 +105,7 @@ export function InvoicesList({ categories }: { categories: TOrderCategory[]; }) 
               <div className="w-full col-span-1 sm:col-span-2 lg:col-span-3 flex items-center justify-center">
                 <Button
                   variant={"dark"}
+                  className="cursor-pointer"
                   disabled={
                     ordersQuery.isLoading ||
                     ordersQuery.isFetchingNextPage

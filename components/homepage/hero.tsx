@@ -11,6 +11,8 @@ import "swiper/css/pagination";
 
 import { Pagination } from "swiper/modules";
 import { GetStrapiImage } from "@/lib/strapi-image";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 export function Hero({ slides }: { slides: TSlider[] }) {
   return (
@@ -38,6 +40,14 @@ export function Hero({ slides }: { slides: TSlider[] }) {
                   {slide.title}
                 </h1>
               </div>
+              <p className="text-sm sm:text-base lg:text-lg line-clamp-2 text-white max-w-[600px] w-full">
+                {slide.description}
+              </p>
+              <Button asChild>
+                <Link prefetch={false} href={'/o-nas'}>
+                  Viac o nás
+                </Link>
+              </Button>
             </div>
             <div
               className={cn(
