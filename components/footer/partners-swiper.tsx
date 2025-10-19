@@ -8,6 +8,7 @@ import { GetStrapiImage } from "@/lib/strapi-image";
 import { cn } from "@/lib/utils";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 
 export function PartnersSwiper({ partners }: { partners: TPartner[] }) {
   return (
@@ -16,6 +17,12 @@ export function PartnersSwiper({ partners }: { partners: TPartner[] }) {
       slidesPerView={"auto"}
       className={cn("w-full", "mySwiper")}
       loop={true}
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+      }}
+      modules={[Autoplay]}
       breakpoints={{
         640: {
           spaceBetween: 20,
@@ -35,7 +42,7 @@ export function PartnersSwiper({ partners }: { partners: TPartner[] }) {
             alt={partner.name}
             width={0}
             height={0}
-            className="w-full h-full object-contain object-center"
+            className="w-full h-full object-contain object-center p-1 sm:p-2 lg:p-6"
             sizes="100vw"
           />
         </SwiperSlide>

@@ -1,6 +1,7 @@
+import type { TStrapiData } from "./api";
+
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { TStrapiData } from "./api";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -20,6 +21,10 @@ export type TSlider = {
   title: string;
   description: string;
   image: TImage;
+  button: {
+    name: string;
+    href: string;
+  }
 };
 
 export type THomepageSlider = TStrapiData & {

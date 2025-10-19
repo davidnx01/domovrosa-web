@@ -1,0 +1,22 @@
+/* Elevate lightbox above all app layers and enable interactions */
+.yarl__root {
+  z-index: 999999 !important;
+  pointer-events: auto !important;
+}
+
+.yarl__container {
+  z-index: 999999 !important;
+}
+
+.yarl__button {
+  z-index: 1000000 !important;
+}
+
+.yarl__container,
+.yarl__thumbnails_container,
+.yarl__thumbnails_bottom,
+.yarl__thumbnails_vignette,
+.yarl__thumbnails_top {
+  background: none !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}

@@ -28,7 +28,7 @@ export function About({ section }: { section: TAboutSection; }) {
           className="max-w-[616px] w-full aspect-square rounded-[16px] object-cover object-center"
           sizes="616px"
         />
-        <div className="w-full md:max-w-[616px] flex flex-col items-start justify-start gap-8 sm:gap-10 lg:gap-12">
+        <div className="w-full md:max-w-[616px] flex flex-col items-start justify-start gap-8">
           <div className="w-full flex flex-col items-start justify-start gap-6">
             <Heading subtitle="STAROSTLIVOSŤ PRE LEPŠÍ ŽIVOT" title="O nás" />
             <Paragraph content={section.content} innerHTML />

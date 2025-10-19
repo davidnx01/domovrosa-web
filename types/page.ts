@@ -21,6 +21,7 @@ export type TPage = TStrapiData & {
 
 export type TTab = TStrapiData & {
   name: string;
+  slug: string;
   content: string;
   image: TImage;
   images: TImage[];

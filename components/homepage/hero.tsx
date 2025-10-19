@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { cn, type TSlider } from "@/lib/utils";
 
@@ -12,7 +13,6 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { GetStrapiImage } from "@/lib/strapi-image";
 import { Button } from "../ui/button";
-import Link from "next/link";
 
 export function Hero({ slides }: { slides: TSlider[] }) {
   return (
@@ -31,7 +31,7 @@ export function Hero({ slides }: { slides: TSlider[] }) {
               "rounded-[12px] overflow-hidden relative sm:p-12 md:p-16 lg:p-[72px] flex items-start justify-end"
             )}
           >
-            <div className="w-full flex flex-col items-start justify-start gap-5 sm:gap-6 relative z-10 pt-[336px]">
+            <div className="w-full flex flex-col items-start justify-start gap-5 sm:gap-6 relative z-10 pt-[260px]">
               <div className="flex flex-col items-start justify-start gap-2 sm:gap-3">
                 <h4 className="py-0.5 px-2.5 bg-primary text-sm sm:text-base font-bold uppercase">
                   {slide.subtitle}
@@ -40,12 +40,12 @@ export function Hero({ slides }: { slides: TSlider[] }) {
                   {slide.title}
                 </h1>
               </div>
-              <p className="text-sm sm:text-base lg:text-lg line-clamp-2 text-white max-w-[600px] w-full">
+              <p className="text-sm sm:text-base lg:text-lg line-clamp-2 text-white max-w-[600px] w-full text-balance">
                 {slide.description}
               </p>
               <Button asChild>
-                <Link prefetch={false} href={'/o-nas'}>
-                  Viac o nás
+                <Link prefetch={false} href={slide.button.href}>
+                  {slide.button.name}
                 </Link>
               </Button>
             </div>

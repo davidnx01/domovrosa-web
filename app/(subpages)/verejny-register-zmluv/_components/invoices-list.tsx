@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 
@@ -12,16 +12,12 @@ import { OrderListSkeleton } from "./order-list-skeleton";
 import { Button } from "@/components/ui/button";
 import { OrderCard } from "./invoice-card";
 
-interface GalleryListProps {
-  categories: TOrderCategory[];
-}
-
 interface LastPageProps {
   meta: TMeta;
   data: TOrder[];
 }
 
-export function InvoicesList({ categories }: { categories: TOrderCategory[]; }) {
+export function InvoicesList({ categories }: { categories: TOrderCategory[] }) {
   const [activeTab, setActiveTab] = React.useState<string>("all");
 
   const ordersQuery = useInfiniteQuery({
@@ -49,8 +45,7 @@ export function InvoicesList({ categories }: { categories: TOrderCategory[]; }) 
     initialPageParam: 1,
   });
 
-  const orders =
-  ordersQuery.data?.pages.flatMap((page) => page.data) ?? [];
+  const orders = ordersQuery.data?.pages.flatMap((page) => page.data) ?? [];
 
   return (
     <section
@@ -79,44 +74,37 @@ export function InvoicesList({ categories }: { categories: TOrderCategory[]; }) 
               </TabsTrigger>
             ))}
           </TabsList>
-          <TabsContent
-            value={activeTab}
-            className={cn(
-              "w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-            )}
-          >
-            {ordersQuery.isLoading && <OrderListSkeleton amount={7} />}
-            {!ordersQuery.isLoading &&
-            !ordersQuery.error &&
-            orders &&
-            orders.length > 0 ? (
-              orders.map((order, index) => (
-                <OrderCard
-                  order={order}
-                  key={`${order.code}-${index}`}
-                />
-              ))
-            ) : (
-              <p className="w-full col-span-1 sm:col-span-2 lg:col-span-3 text-center mt-10 mb-40">
-                Žiadne zmluvy neboli nenájdené.
-              </p>
-            )}
-            {ordersQuery.hasNextPage && (
-              <div className="w-full col-span-1 sm:col-span-2 lg:col-span-3 flex items-center justify-center">
-                <Button
-                  variant={"dark"}
-                  className="cursor-pointer"
-                  disabled={
-                    ordersQuery.isLoading ||
-                    ordersQuery.isFetchingNextPage
-                  }
-                  onClick={() => ordersQuery.fetchNextPage()}
-                >
-                  Načítať ďalšie
-                </Button>
-              </div>
-            )}
+          <TabsContent value={activeTab} className={cn("w-full")}>
+            <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {ordersQuery.isLoading && <OrderListSkeleton amount={7} />}
+              {!ordersQuery.isLoading &&
+              !ordersQuery.error &&
+              orders &&
+              orders.length > 0 ? (
+                orders.map((order, index) => (
+                  <OrderCard order={order} key={`${order.code}-${index}`} />
+                ))
+              ) : (
+                <p className="w-full col-span-1 sm:col-span-2 text-center mt-10 mb-40">
+                  Žiadne zmluvy neboli nenájdené.
+                </p>
+              )}
+            </div>
           </TabsContent>
+          {ordersQuery.hasNextPage && (
+            <div className="w-full flex items-center justify-center">
+              <Button
+                variant={"dark"}
+                className="cursor-pointer"
+                disabled={
+                  ordersQuery.isLoading || ordersQuery.isFetchingNextPage
+                }
+                onClick={() => ordersQuery.fetchNextPage()}
+              >
+                Načítať ďalšie
+              </Button>
+            </div>
+          )}
         </Tabs>
       </div>
     </section>

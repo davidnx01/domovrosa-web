@@ -5,7 +5,6 @@ import type { TService, TServiceSection } from "@/types/service";
 import { Heading } from "../ui/heading";
 import { cn } from "@/lib/utils";
 import { Paragraph } from "../ui/paragraph";
-import { Button } from "../ui/button";
 import { GetStrapiImage } from "@/lib/strapi-image";
 
 

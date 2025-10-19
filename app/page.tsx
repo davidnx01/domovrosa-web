@@ -7,11 +7,11 @@ import { Hero } from "@/components/homepage/hero";
 import { Services } from "@/components/homepage/services";
 import { fetchData } from "@/lib/api";
 import { TAboutSection, TBlogSection } from "@/types/sections";
-import { TBlog } from "@/types/gallery";
+import { TGallery } from "@/types/gallery";
 
 export default async function Home() {
   const slider = (await fetchData("slider", {
-    populate: ["slides.image"],
+    populate: ["slides.image", "slides.button"],
   })) as THomepageSlider;
 
   const serviceSection = (await fetchData("service-section", {
@@ -30,7 +30,7 @@ export default async function Home() {
     populate: ['image', 'fotogallery_category'],
     sort: "publishedAt:asc",
     pagination: { pageSize: 3 },
-  })) as TBlog[];
+  })) as TGallery[];
 
   return (
     <main>
