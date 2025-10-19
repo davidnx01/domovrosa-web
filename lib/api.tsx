@@ -207,5 +207,5 @@ export async function fetchClientData<T>(
 
 // Example helper that you had before
 export async function fetchGeneral() {
-  return fetchData("general", { populate: ["logo"] });
+  return fetchData("general", { populate: ["logo", "seo"] });
 }

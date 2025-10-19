@@ -4,6 +4,19 @@ import { TPage } from "@/types/page";
 import { ContactCards } from "./_components/contact-cards";
 import { TGeneral, TMember } from "@/types/general";
 import { ContactTabs } from "./_components/tabs";
+import { generateMetadata as generateSharedMetadata } from "@/hooks/generate-metadata";
+
+export async function generateMetadata() {
+  const [page, general] = await Promise.all([
+    fetchData("contacts-page", { populate: ["seo"] }) as Promise<TPage>,
+    fetchGeneral() as Promise<TGeneral>,
+  ]);
+
+  return generateSharedMetadata({
+    seo: page.seo,
+    general,
+  });
+}
 
 export default async function Page() {
   const page = (await fetchData("contacts-page", {

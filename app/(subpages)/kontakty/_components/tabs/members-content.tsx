@@ -22,10 +22,7 @@ export function MembersContent({ members }: { members: TMember[] }) {
       )}
     >
       {members.map((member, index) => (
-        <MemberCard
-          member={member}
-          key={`${member.name}-${index}`}
-        />
+        <MemberCard member={member} key={`${member.name}-${index}`} />
       ))}
     </TabsContent>
   );
@@ -62,20 +59,21 @@ function MemberCard({ member }: { member: TMember }) {
         "ea-members-card"
       )}
     >
-      <Image
-        src={GetStrapiImage(member?.image?.url)}
-        alt={member?.name}
-        width={0}
-        height={0}
-        className="min-w-[100px] max-w-[100px] min-h-[100px] max-h-[100px] rounded-full object-cover"
-        sizes="100vw"
-      />
+      {!!member?.image?.url && (
+        <Image
+          src={GetStrapiImage(member?.image?.url)}
+          alt={member?.name}
+          width={0}
+          height={0}
+          className="min-w-[100px] max-w-[100px] min-h-[100px] max-h-[100px] rounded-full object-cover"
+          sizes="100vw"
+        />
+      )}
+
       <div className="w-full flex flex-col items-start justify-start gap-4">
         <div className="w-full flex flex-col items-start justify-start gap-0">
           <p className="font-semibold text-primary">{member?.role}</p>
-          <h5 className="font-bold">
-            {member?.name}
-          </h5>
+          <h5 className="font-bold">{member?.name}</h5>
         </div>
         <div className="w-full h-[1px] bg-black/10" />
         <div className="w-full flex flex-col items-start justify-start gap-2">

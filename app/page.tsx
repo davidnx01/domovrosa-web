@@ -5,7 +5,7 @@ import { About } from "@/components/homepage/about";
 import { Blogs } from "@/components/homepage/blogs";
 import { Hero } from "@/components/homepage/hero";
 import { Services } from "@/components/homepage/services";
-import { fetchData } from "@/lib/api";
+import { fetchData, fetchGeneral } from "@/lib/api";
 import { TAboutSection, TBlogSection } from "@/types/sections";
 import { TGallery } from "@/types/gallery";
 
@@ -31,6 +31,7 @@ export default async function Home() {
     sort: "publishedAt:asc",
     pagination: { pageSize: 3 },
   })) as TGallery[];
+
 
   return (
     <main>

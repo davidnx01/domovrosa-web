@@ -1,4 +1,5 @@
 import { TImage } from "@/lib/utils";
+import { TPage } from "./page";
 
 export type TGeneral = {
   logo: TImage;
@@ -14,6 +15,7 @@ export type TGeneral = {
   company_state: string;
   ico: string;
   dic: string;
+  seo: TPage['seo'];
 }
 
 export type THeading = {
