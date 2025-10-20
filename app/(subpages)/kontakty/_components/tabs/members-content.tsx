@@ -73,7 +73,7 @@ function MemberCard({ member }: { member: TMember }) {
       <div className="w-full flex flex-col items-start justify-start gap-4">
         <div className="w-full flex flex-col items-start justify-start gap-0">
           <p className="font-semibold text-primary">{member?.role}</p>
-          <h5 className="font-bold">{member?.name}</h5>
+          {member?.role && <h5 className="font-bold">{member?.name}</h5>}
         </div>
         <div className="w-full h-[1px] bg-black/10" />
         <div className="w-full flex flex-col items-start justify-start gap-2">

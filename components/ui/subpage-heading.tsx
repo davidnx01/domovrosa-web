@@ -34,7 +34,7 @@ export function SubpageHeading({
         {description && (
           <Paragraph
             content={description}
-            className="text-black text-sm sm:text-base lg:text-lg max-w-[766px] w-full"
+            className="text-black text-sm sm:text-base lg:text-lg max-w-[866px] w-full"
           />
         )}
       </div>

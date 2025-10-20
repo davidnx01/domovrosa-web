@@ -9,6 +9,18 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function BillingContent({ general }: { general: TGeneral }) {
+  const locationURL =
+    general.city && general.address
+      ? encodeURI(
+          `https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=${
+            general.city + " " + general.address
+          }(My%20Business%20Name)&amp;t=&amp;z=17&amp;ie=UTF8&amp;iwloc=B&amp;output=embed`
+        ).replace(/&amp;/g, "&")
+      : "https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=S%C3%A1rospatak,%20Hat%C3%A1r%20%C3%BAt%202/B,%203950%20Hungary+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed".replace(
+          /&amp;/g,
+          "&"
+        );
+
   return (
     <TabsContent
       value="Fakturačné údaje"
@@ -51,6 +63,7 @@ export function BillingContent({ general }: { general: TGeneral }) {
           </Link>
         </Button>
       </div>
+      <iframe className="w-full aspect-square rounded-[8px] max-w-[616px]" src={locationURL} />
     </TabsContent>
   );
 }

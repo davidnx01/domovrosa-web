@@ -10,6 +10,9 @@ import { cn } from "@/lib/utils";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 export function PartnersSwiper({ partners }: { partners: TPartner[] }) {
   return (
     <Swiper

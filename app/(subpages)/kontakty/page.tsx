@@ -25,6 +25,7 @@ export default async function Page() {
 
   const members = (await fetchData("members", {
     populate: ["image"],
+    pagination: { pageSize: 40 },
   })) as TMember[];
 
   const general = (await fetchGeneral()) as TGeneral;

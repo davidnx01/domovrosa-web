@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
 import React from "react";
@@ -9,18 +8,39 @@ import type { TTab } from "@/types/page";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
 
-import { cn } from "@/lib/utils";
+import { cn, TImage } from "@/lib/utils";
 import { Paragraph } from "./paragraph";
 import { GetStrapiImage } from "@/lib/strapi-image";
 
 import { RiDownload2Line } from "react-icons/ri";
+import { PageTabsSwiper } from "./page-tabs-swiper";
 
-export function PageTabs({ tabs }: { tabs: TTab[] }) {
+interface ClassNamesProps {
+  tabs?: {
+    container?: string;
+    tabs_list?: string;
+    tabs_trigger?: string;
+    tabs_content?: string;
+    tabs_content_description?: string;
+  };
+}
+
+export function PageTabs({
+  tabs,
+  className,
+}: {
+  tabs: TTab[];
+  className?: ClassNamesProps;
+}) {
   const [activeTab, setActiveTab] = React.useState<string>(
     tabs[0]?.id.toString()
   );
 
   const currentTab = tabs.find((tab) => tab.id.toString() === activeTab);
+
+  const allImages = [currentTab?.image, ...(currentTab?.images || [])].filter(
+    (img): img is TImage => Boolean(img)
+  );
 
   return (
     <Tabs
@@ -29,17 +49,23 @@ export function PageTabs({ tabs }: { tabs: TTab[] }) {
       className={cn(
         "custom-section",
         "pt-16 sm:pt-20 lg:pt-24 pb-12 lg:pb-16 flex flex-col items-start justify-start gap-8 sm:gap-10 lg:gap-12",
-        "ea-page-tabs__tabs"
+        "ea-page-tabs__tabs",
+        className?.tabs?.container
       )}
     >
       <TabsList
         className={cn(
           "custom-container",
-          "w-full flex items-start justify-start gap-3 flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-x-hidden max-w-[875px]"
+          "w-full flex items-start justify-start gap-3 flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-x-hidden max-w-[875px]",
+          className?.tabs?.tabs_list
         )}
       >
         {tabs.map((tab) => (
-          <TabsTrigger value={tab.id.toString()} key={tab.id}>
+          <TabsTrigger
+            value={tab.id.toString()}
+            key={tab.id}
+            className={cn(className?.tabs?.tabs_trigger)}
+          >
             {tab.name}
           </TabsTrigger>
         ))}
@@ -48,10 +74,11 @@ export function PageTabs({ tabs }: { tabs: TTab[] }) {
         value={activeTab}
         className={cn(
           "custom-container",
-          "flex flex-col items-start justify-start gap-12 pr-6 md:pr-0"
+          "flex flex-col items-start justify-start gap-12 pr-6 md:pr-0",
+          className?.tabs?.tabs_content
         )}
       >
-        {currentTab?.content || currentTab?.image || currentTab?.images ? (
+        {currentTab?.content || allImages && allImages.length > 0 ? (
           <div className="w-full flex flex-col items-start justify-start gap-12 sm:gap-14 xl:gap-16 md:flex-row md:justify-between">
             {currentTab?.content && (
               <Paragraph
@@ -60,45 +87,16 @@ export function PageTabs({ tabs }: { tabs: TTab[] }) {
                 className={cn(
                   "w-full",
                   "page-tabs__content",
+                  className?.tabs?.tabs_content_description,
                   currentTab?.images && currentTab?.images?.length > 0
                     ? "md:max-w-[760px]"
                     : "md:max-w-[1500px]"
                 )}
               />
             )}
-            <div className="md:max-w-[531px] w-full flex flex-col items-start justify-start gap-16 lg:gap-20 xl:gap-24">
-              {currentTab?.image && (
-                <div className="w-full relative">
-                  <Image
-                    src={GetStrapiImage(currentTab.image.url)}
-                    alt={currentTab.name}
-                    width={0}
-                    height={0}
-                    className="relative w-full h-auto object-cover object-center z-[1]"
-                    sizes="100vw"
-                  />
-                  <div className="absolute w-full h-full z-0 bg-secondary -right-3 top-3" />
-                </div>
-              )}
-              {currentTab?.images && currentTab.images.length > 0 && (
-                <div className="w-full flex flex-col items-start justify-start gap-4 lg:gap-5">
-                  <h5 className="text-xl sm:text-2xl lg:text-3xl">Galéria</h5>
-                  <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 lg:gap-4">
-                    {currentTab.images.map((image) => (
-                      <Image
-                        key={image.id}
-                        src={GetStrapiImage(image.url)}
-                        alt={currentTab.name}
-                        width={0}
-                        height={0}
-                        className="w-full col-span-1 h-[160px] sm:h-[176px] object-cover object-center"
-                        sizes="100vw"
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+            {allImages && allImages.length > 0 && (
+              <PageTabsSwiper images={allImages} />
+            )}
           </div>
         ) : null}
 

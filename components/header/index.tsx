@@ -42,6 +42,8 @@ export async function Header({ general }: { general: TGeneral }) {
             alt={"DomovROSA logo"}
             width={131}
             height={64}
+            className="max-h-14 sm:max-h-16 min-h-14 sm:min-h-16 w-auto object-contain"
+            sizes="300px"
           />
         </Link>
         <Button asChild size={"default-later-icon"} variant={"secondary"}>
@@ -51,7 +53,7 @@ export async function Header({ general }: { general: TGeneral }) {
           </Link>
         </Button>
       </div>
-      <div className={cn("custom-container", "bg-black/15 h-[1px]")} />
+      <div className={cn("custom-container", "bg-black/15 h-[1px] hidden xl:block")} />
       <Navbar links={headerLinks} />
     </header>
   );

@@ -147,7 +147,7 @@ html {
   padding-bottom: 56px !important;
 }
 
-.swiper-pagination-bullet {
+.hero-swiper .swiper-pagination-bullet {
   height: 14px !important;
   width: 14px !important;
   opacity: 10% !important;
@@ -155,11 +155,15 @@ html {
   transition: all 0.3s ease-in-out !important;
 }
 
-.swiper-pagination-bullet-active {
+.hero-swiper .swiper-pagination-bullet-active {
   opacity: 100% !important;
   background: var(--primary) !important;
   width: 40px !important;
   border-radius: 8px !important;
+}
+
+.ea-page-tabs__swiper .swiper-pagination-bullet-active {
+  @apply bg-primary;
 }
 
 .page-tabs__content h2 {
@@ -234,4 +238,30 @@ html {
 
 .swiper-wrapper {
   @apply flex flex-row;
+}
+
+.ea-naklady__content-description > figure {
+  width: 100% !important;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  display: block;
+}
+
+.ea-naklady__content-description > figure > table {
+  width: 100%;
+  min-width: max-content;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.ea-naklady__content-description > figure > table > tbody td {
+  padding: 0.5rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.ea-naklady__content-description > figure > table > tbody td,
+.ea-naklady__content-description > figure > table > tbody td strong {
+  @apply text-sm sm:text-base;
 }
