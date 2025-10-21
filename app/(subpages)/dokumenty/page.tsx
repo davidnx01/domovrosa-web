@@ -1,7 +1,25 @@
+import type { TGeneral } from "@/types/general";
+import type { TPage } from "@/types/page";
+
 import { PageTabs } from "@/components/ui/page-tabs";
 import { SubpageHeading } from "@/components/ui/subpage-heading";
-import { fetchData } from "@/lib/api";
-import { TPage } from "@/types/page";
+import { fetchData, fetchGeneral } from "@/lib/api";
+
+import { generateMetadata as generateSharedMetadata } from "@/hooks/generate-metadata";
+
+export async function generateMetadata() {
+  const [page, general] = await Promise.all([
+    fetchData("documents-page", {
+      populate: ["seo", "seo.open_graph"],
+    }) as Promise<TPage>,
+    fetchGeneral() as Promise<TGeneral>,
+  ]);
+
+  return generateSharedMetadata({
+    seo: page.seo,
+    general,
+  });
+}
 
 export default async function Page() {
   const page = (await fetchData("documents-page", {

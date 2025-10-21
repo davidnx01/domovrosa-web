@@ -8,6 +8,22 @@ import { Services } from "@/components/homepage/services";
 import { fetchData, fetchGeneral } from "@/lib/api";
 import { TAboutSection, TBlogSection } from "@/types/sections";
 import { TGallery } from "@/types/gallery";
+import { TPage } from "@/types/page";
+import { TGeneral } from "@/types/general";
+
+import { generateMetadata as generateSharedMetadata } from "@/hooks/generate-metadata";
+
+export async function generateMetadata() {
+  const [page, general] = await Promise.all([
+    fetchData("homepage", { populate: ["seo", "seo.open_graph"] }) as Promise<TPage>,
+    fetchGeneral() as Promise<TGeneral>,
+  ]);
+
+  return generateSharedMetadata({
+    seo: page.seo,
+    general,
+  });
+}
 
 export default async function Home() {
   const slider = (await fetchData("slider", {
@@ -31,6 +47,8 @@ export default async function Home() {
     sort: "publishedAt:asc",
     pagination: { pageSize: 3 },
   })) as TGallery[];
+
+
 
 
   return (

@@ -1,13 +1,30 @@
 
+import type { TGeneral } from "@/types/general";
 import type { TPage } from "@/types/page";
 
 import { SubpageHeading } from "@/components/ui/subpage-heading";
-import { fetchData } from "@/lib/api";
+import { fetchData, fetchGeneral } from "@/lib/api";
 
+import { generateMetadata as generateSharedMetadata } from "@/hooks/generate-metadata";
+import { PageTabs } from "@/components/ui/page-tabs";
+
+export async function generateMetadata() {
+  const [page, general] = await Promise.all([
+    fetchData("spolupraca-page", {
+      populate: ["seo", "seo.open_graph"],
+    }) as Promise<TPage>,
+    fetchGeneral() as Promise<TGeneral>,
+  ]);
+
+  return generateSharedMetadata({
+    seo: page.seo,
+    general,
+  });
+}
 
 export default async function Page() {
   const page = (await fetchData("spolupraca-page", {
-    populate: ["heading", "heading.image"],
+    populate: ["heading", "heading.image", "tabs", "tabs.files"],
   })) as TPage;
 
   return (
@@ -16,6 +33,9 @@ export default async function Page() {
         image={page.heading.image}
         title={page.heading.title}
         description={page.heading.description}
+      />
+      <PageTabs 
+        tabs={page.tabs}
       />
     </>
   );

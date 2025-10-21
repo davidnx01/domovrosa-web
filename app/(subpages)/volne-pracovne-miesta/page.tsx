@@ -1,8 +1,25 @@
-import { PageTabs } from "@/components/ui/page-tabs";
+import type { TGeneral } from "@/types/general";
+import type { TPage } from "@/types/page";
+
 import { SubpageHeading } from "@/components/ui/subpage-heading";
-import { fetchData } from "@/lib/api";
-import { TPage } from "@/types/page";
+import { fetchData, fetchGeneral } from "@/lib/api";
 import { JobOffers } from "./_components/job-offers";
+
+import { generateMetadata as generateSharedMetadata } from "@/hooks/generate-metadata";
+
+export async function generateMetadata() {
+  const [page, general] = await Promise.all([
+    fetchData("ekonomika-page", {
+      populate: ["seo", "seo.open_graph"],
+    }) as Promise<TPage>,
+    fetchGeneral() as Promise<TGeneral>,
+  ]);
+
+  return generateSharedMetadata({
+    seo: page.seo,
+    general,
+  });
+}
 
 export default async function Page() {
   const page = (await fetchData("pracovne-miesta-page", {

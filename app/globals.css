@@ -240,7 +240,7 @@ html {
   @apply flex flex-row;
 }
 
-.ea-naklady__content-description > figure {
+.page-tabs__content > figure {
   width: 100% !important;
   max-width: 100%;
   overflow-x: auto;
@@ -248,20 +248,20 @@ html {
   display: block;
 }
 
-.ea-naklady__content-description > figure > table {
+.page-tabs__content > figure > table {
   width: 100%;
   min-width: max-content;
   border-collapse: collapse;
   white-space: nowrap;
 }
 
-.ea-naklady__content-description > figure > table > tbody td {
+.page-tabs__content > figure > table > tbody td {
   padding: 0.5rem;
   text-align: left;
   vertical-align: middle;
 }
 
-.ea-naklady__content-description > figure > table > tbody td,
-.ea-naklady__content-description > figure > table > tbody td strong {
+.page-tabs__content > figure > table > tbody td,
+.page-tabs__content > figure > table > tbody td strong {
   @apply text-sm sm:text-base;
 }

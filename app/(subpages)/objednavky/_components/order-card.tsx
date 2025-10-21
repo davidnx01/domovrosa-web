@@ -21,7 +21,7 @@ export function OrderCard({ order }: { order: TOrder }) {
       {data.map((item, index) => (
         <div
           key={item.label}
-          className={cn('w-full flex items-end justify-between gap-3 py-3', {
+          className={cn('w-full flex items-start justify-between gap-3 py-3', {
             'border-t border-border': index !== 0,
             'pb-0': index === data.length - 1,
           })}

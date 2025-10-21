@@ -1,7 +1,24 @@
 import { PageTabs } from "@/components/ui/page-tabs";
 import { SubpageHeading } from "@/components/ui/subpage-heading";
-import { fetchData } from "@/lib/api";
+import { fetchData, fetchGeneral } from "@/lib/api";
 import { TPage } from "@/types/page";
+
+import { generateMetadata as generateSharedMetadata } from "@/hooks/generate-metadata";
+import { TGeneral } from "@/types/general";
+
+export async function generateMetadata() {
+  const [page, general] = await Promise.all([
+    fetchData("gdpr-page", {
+      populate: ["seo", "seo.open_graph"],
+    }) as Promise<TPage>,
+    fetchGeneral() as Promise<TGeneral>,
+  ]);
+
+  return generateSharedMetadata({
+    seo: page.seo,
+    general,
+  });
+}
 
 export default async function Page() {
   const page = (await fetchData("gdpr-page", {

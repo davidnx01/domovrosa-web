@@ -2,40 +2,42 @@
 
 import React from "react";
 
+import type { TInvoice, TInvoiceCategory } from "@/types/invoice";
+import { type TMeta, fetchClientData } from "@/lib/api";
+
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { TMeta, fetchClientData } from "@/lib/api";
-import { TOrder, TOrderCategory } from "@/types/order";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
-import { OrderListSkeleton } from "./order-list-skeleton";
+
 import { Button } from "@/components/ui/button";
-import { OrderCard } from "./invoice-card";
+import { InvoiceCard } from "./invoice-card";
+import { InvoiceListSkeleton } from "./invoice-list-skeleton";
 
 interface LastPageProps {
   meta: TMeta;
-  data: TOrder[];
+  data: TInvoice[];
 }
 
-export function InvoicesList({ categories }: { categories: TOrderCategory[] }) {
-  const [activeTab, setActiveTab] = React.useState<string>("all");
+export function InvoicesList({ categories }: { categories: TInvoiceCategory[] }) {
+  const [activeTab, setActiveTab] = React.useState<string>(categories[0]?.slug );
 
-  const ordersQuery = useInfiniteQuery({
-    queryKey: ["orders", activeTab],
+  const invoicesQuery = useInfiniteQuery({
+    queryKey: ["invoices", activeTab],
     //@ts-expect-error TS2345
     queryFn: ({ pageParam = 1 }) =>
       fetchClientData<{
         data: {
           pages: {
-            data: TOrder[];
+            data: TInvoice[];
           }[];
         };
-      }>("orders", {
-        populate: ["order_category"],
+      }>("invoices", {
+        populate: ["invoice_category"],
         pagination: { page: pageParam, pageSize: 10 },
         filters:
           activeTab !== "all"
-            ? { order_category: { slug: { $eq: activeTab } } }
+            ? { invoice_category: { slug: { $eq: activeTab } } }
             : undefined,
       }),
     getNextPageParam: (lastPage: LastPageProps) => {
@@ -45,7 +47,7 @@ export function InvoicesList({ categories }: { categories: TOrderCategory[] }) {
     initialPageParam: 1,
   });
 
-  const orders = ordersQuery.data?.pages.flatMap((page) => page.data) ?? [];
+  const invoices = invoicesQuery.data?.pages.flatMap((page) => page.data) ?? [];
 
   return (
     <section
@@ -67,7 +69,6 @@ export function InvoicesList({ categories }: { categories: TOrderCategory[] }) {
               "w-full flex items-start justify-start gap-3 flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-x-hidden"
             )}
           >
-            <TabsTrigger value="all">Všetky</TabsTrigger>
             {categories.map((tab) => (
               <TabsTrigger value={tab.slug} key={tab.slug}>
                 {tab.name}
@@ -75,14 +76,14 @@ export function InvoicesList({ categories }: { categories: TOrderCategory[] }) {
             ))}
           </TabsList>
           <TabsContent value={activeTab} className={cn("w-full")}>
-            <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {ordersQuery.isLoading && <OrderListSkeleton amount={7} />}
-              {!ordersQuery.isLoading &&
-              !ordersQuery.error &&
-              orders &&
-              orders.length > 0 ? (
-                orders.map((order, index) => (
-                  <OrderCard order={order} key={`${order.code}-${index}`} />
+            <div className="w-full grid grid-cols-1 gap-6 md:grid-cols-2">
+              {invoicesQuery.isLoading && <InvoiceListSkeleton amount={7} />}
+              {!invoicesQuery.isLoading &&
+              !invoicesQuery.error &&
+              invoices &&
+              invoices.length > 0 ? (
+                invoices.map((invoice, index) => (
+                  <InvoiceCard invoice={invoice} key={`${invoice.code}-${index}`} />
                 ))
               ) : (
                 <p className="w-full col-span-1 sm:col-span-2 text-center mt-10 mb-40">
@@ -91,15 +92,15 @@ export function InvoicesList({ categories }: { categories: TOrderCategory[] }) {
               )}
             </div>
           </TabsContent>
-          {ordersQuery.hasNextPage && (
+          {invoicesQuery.hasNextPage && (
             <div className="w-full flex items-center justify-center">
               <Button
                 variant={"dark"}
                 className="cursor-pointer"
                 disabled={
-                  ordersQuery.isLoading || ordersQuery.isFetchingNextPage
+                  invoicesQuery.isLoading || invoicesQuery.isFetchingNextPage
                 }
-                onClick={() => ordersQuery.fetchNextPage()}
+                onClick={() => invoicesQuery.fetchNextPage()}
               >
                 Načítať ďalšie
               </Button>

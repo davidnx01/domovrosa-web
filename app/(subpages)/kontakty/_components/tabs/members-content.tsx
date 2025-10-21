@@ -13,6 +13,10 @@ import { MdOutlinePhoneInTalk } from "react-icons/md";
 import { BsEnvelope } from "react-icons/bs";
 
 export function MembersContent({ members }: { members: TMember[] }) {
+  const orderedMembers = [...members].sort((a, b) =>
+    a.id === 33 ? -1 : b.id === 33 ? 1 : 0
+  );
+
   return (
     <TabsContent
       value="Kontaktné osoby"
@@ -21,8 +25,8 @@ export function MembersContent({ members }: { members: TMember[] }) {
         "grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 xl:gap-12"
       )}
     >
-      {members.map((member, index) => (
-        <MemberCard member={member} key={`${member.name}-${index}`} />
+      {orderedMembers.map((member, index) => (
+        <MemberCard key={`${member.id}-${index}`} member={member} />
       ))}
     </TabsContent>
   );
@@ -30,27 +34,31 @@ export function MembersContent({ members }: { members: TMember[] }) {
 
 function MemberCard({ member }: { member: TMember }) {
   const contacts = [
-    {
-      label: member?.phone_1 ?? null,
+    member?.phone_1 && {
+      label: member.phone_1,
       href: `tel:${member.phone_1}`,
       type: "phone",
     },
-    {
-      label: member?.phone_2 ?? null,
+    member?.phone_2 && {
+      label: member.phone_2,
       href: `tel:${member.phone_2}`,
       type: "phone",
     },
-    {
-      label: member?.email_1 ?? null,
+    member?.email_1 && {
+      label: member.email_1,
       href: `mailto:${member.email_1}`,
       type: "email",
     },
-    {
-      label: member?.email_2 ?? null,
+    member?.email_2 && {
+      label: member.email_2,
       href: `mailto:${member.email_2}`,
       type: "email",
     },
-  ];
+  ].filter(Boolean) as {
+    label: string;
+    href: string;
+    type: "phone" | "email";
+  }[];
 
   return (
     <div
@@ -59,45 +67,44 @@ function MemberCard({ member }: { member: TMember }) {
         "ea-members-card"
       )}
     >
-      {!!member?.image?.url && (
+      {member?.image?.url && (
         <Image
-          src={GetStrapiImage(member?.image?.url)}
-          alt={member?.name}
-          width={0}
-          height={0}
+          src={GetStrapiImage(member.image.url)}
+          alt={member.name}
+          width={100}
+          height={100}
           className="min-w-[100px] max-w-[100px] min-h-[100px] max-h-[100px] rounded-full object-cover"
-          sizes="100vw"
         />
       )}
 
       <div className="w-full flex flex-col items-start justify-start gap-4">
         <div className="w-full flex flex-col items-start justify-start gap-0">
-          <p className="font-semibold text-primary">{member?.role}</p>
-          {member?.role && <h5 className="font-bold">{member?.name}</h5>}
+          {member?.role && (
+            <p className="font-semibold text-primary">{member.role}</p>
+          )}
+          <h5 className="font-bold">{member?.name}</h5>
         </div>
-        <div className="w-full h-[1px] bg-black/10" />
-        <div className="w-full flex flex-col items-start justify-start gap-2">
-          {contacts.map((contact) => {
-            if (!contact.label) return null;
 
-            return (
-              <Link
-                prefetch={false}
-                key={contact.label}
-                href={contact.href}
-                className="flex items-center justify-start gap-3"
-              >
-                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                  {contact.type === "phone" ? (
-                    <MdOutlinePhoneInTalk size={24} />
-                  ) : (
-                    <BsEnvelope size={24} />
-                  )}
-                </div>
-                <p className="text-sm sm:text-base">{contact.label}</p>
-              </Link>
-            );
-          })}
+        <div className="w-full h-[1px] bg-black/10" />
+
+        <div className="w-full flex flex-col items-start justify-start gap-2">
+          {contacts.map((contact) => (
+            <Link
+              prefetch={false}
+              key={contact.label}
+              href={contact.href}
+              className="flex items-center justify-start gap-3"
+            >
+              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                {contact.type === "phone" ? (
+                  <MdOutlinePhoneInTalk size={24} />
+                ) : (
+                  <BsEnvelope size={24} />
+                )}
+              </div>
+              <p className="text-sm sm:text-base">{contact.label}</p>
+            </Link>
+          ))}
         </div>
       </div>
     </div>

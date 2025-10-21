@@ -1,5 +1,6 @@
 import { TImage } from "@/lib/utils";
 import { TPage } from "./page";
+import { TStrapiData } from "@/lib/api";
 
 export type TGeneral = {
   logo: TImage;
@@ -23,7 +24,7 @@ export type THeading = {
   title: string;
 }
 
-export type TMember = {
+export type TMember = TStrapiData & {
   name: string;
   role: string;
   image: TImage;
