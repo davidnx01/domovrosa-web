@@ -77,8 +77,8 @@ export function DesktopSidebar({
               <AccordionTrigger className="text-xl font-semibold">
                 Menu
                 <MdKeyboardArrowDown
-                  size={20}
-                  className="text-primary transition-all"
+                  size={24}
+                  className="text-secondary transition-all"
                 />
               </AccordionTrigger>
               <AccordionContent className="mt-2">
@@ -103,8 +103,8 @@ export function DesktopSidebar({
               <AccordionTrigger className="text-xl font-semibold">
                 Navigácia
                 <MdKeyboardArrowDown
-                  size={20}
-                  className="text-primary transition-all"
+                  size={24}
+                  className="text-secondary transition-all"
                 />
               </AccordionTrigger>
               <AccordionContent className="mt-2">

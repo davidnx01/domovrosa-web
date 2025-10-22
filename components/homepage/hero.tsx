@@ -28,7 +28,7 @@ export function Hero({ slides }: { slides: TSlider[] }) {
             key={slide.title}
             className={cn(
               "custom-container",
-              "rounded-[12px] overflow-hidden relative sm:p-12 md:p-16 lg:p-[72px] flex items-start justify-end"
+              "rounded-[12px] overflow-hidden relative p-6 sm:p-12 md:p-16 lg:p-[72px] flex items-start justify-end"
             )}
           >
             <div className="w-full flex flex-col items-start justify-start gap-5 sm:gap-6 relative z-10 pt-[260px]">

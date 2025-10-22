@@ -60,10 +60,7 @@ export interface StrapiResponse<T> {
 /* ------------------------------- Config / URLs ------------------------------- */
 
 // Primary server URL (can be STRAPI_INTERNAL_URL in containerized setups)
-const STRAPI_API_URL =
-  process.env.STRAPI_API_URL ||
-  process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-  "http://localhost:1337";
+const STRAPI_API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || process.env.STRAPI_API_URL || "http://localhost:1337";
 
 /* -------------------------------- Utility: buildQuery ------------------------------- */
 

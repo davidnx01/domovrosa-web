@@ -19,7 +19,7 @@ export function SubpageHeading({
     <section
       className={cn(
         "custom-section",
-        "h-[330px] sm:h-[360px] lg:h-[390px] relative pt-8 sm:pt-10 lg:pt-12"
+        "h-[280px] sm:h-[360px] lg:h-[390px] relative pt-8 sm:pt-10 lg:pt-12"
       )}
     >
       <div

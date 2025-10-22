@@ -24,7 +24,7 @@ const buttonVariants = cva(
       size: {
         "default-later-icon":
           "h-10 sm:h-12 lg:h-[52px] px-0 sm:px-6 sm:w-auto w-10",
-        default: "h-10 sm:h-12 lg:h-[52px] sm:px-6 w-auto",
+        default: "h-11 sm:h-12 lg:h-[52px] sm:px-6 w-fit px-6",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
