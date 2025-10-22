@@ -2,12 +2,12 @@ import Image from 'next/image';
 
 import { isImageSlide } from 'yet-another-react-lightbox';
 
-function isNextJsImage(slide: any) {
+function isNextJsImage(slide: { src: string }) {
   return isImageSlide(slide);
 }
 
-export default function NextJsImage({ slide }: any) {
-  if (!isNextJsImage(slide.src)) {
+export default function NextJsImage({ slide }: { slide: { src: string ; }}) {
+  if (!isNextJsImage(slide)) {
     return undefined;
   }
 

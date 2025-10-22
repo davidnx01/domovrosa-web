@@ -58,9 +58,9 @@ export function DesktopSidebar({
           className="w-full hidden xl:flex flex-col items-start justify-start gap-0 px-8 mt-8"
         >
           {" "}
-          {sidebarLinks.map((link, index) => {
+          {sidebarLinks.map(link => {
             const hasChildren = link.childs && link.childs.length > 0;
-            const isLast = index === sidebarLinks.length - 1;
+
             return (
               <SidebarItem
                 key={link.name}

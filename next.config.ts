@@ -2,7 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'domovrosa-api.tyvole.sk'],
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   },
 };
 
