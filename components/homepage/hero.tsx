@@ -16,7 +16,7 @@ import { Button } from "../ui/button";
 
 export function Hero({ slides }: { slides: TSlider[] }) {
   return (
-    <section className={cn("custom-section", "pt-10 lg:pt-12 bg-primary/10")}>
+    <section className={cn("custom-section", "pt-10 lg:pt-12 bg-primary/10 pb-8")}>
       <Swiper
         pagination={true}
         modules={[Pagination]}
@@ -31,18 +31,12 @@ export function Hero({ slides }: { slides: TSlider[] }) {
               "rounded-[12px] overflow-hidden relative p-6 sm:p-12 md:p-16 lg:p-[72px] flex items-start justify-end"
             )}
           >
-            <div className="w-full flex flex-col items-start justify-start gap-5 sm:gap-6 relative z-10 pt-[260px]">
+            <div className="w-full flex flex-col items-start justify-start gap-6 sm:gap-8 relative z-10 pt-[380px]">
               <div className="flex flex-col items-start justify-start gap-2 sm:gap-3">
-                <h4 className="py-0.5 px-2.5 bg-primary text-sm sm:text-base font-bold uppercase">
-                  {slide.subtitle}
-                </h4>
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white">
-                  {slide.title}
+                  {slide.subtitle}
                 </h1>
               </div>
-              <p className="text-sm sm:text-base lg:text-lg line-clamp-2 text-white max-w-[600px] w-full text-balance">
-                {slide.description}
-              </p>
               <Button asChild>
                 <Link prefetch={false} href={slide.button.href}>
                   {slide.button.name}

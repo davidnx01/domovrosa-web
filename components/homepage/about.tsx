@@ -33,28 +33,23 @@ export function About({ section }: { section: TAboutSection; }) {
             <Heading subtitle="STAROSTLIVOSŤ PRE LEPŠÍ ŽIVOT" title="O nás" />
             <Paragraph content={section.content} innerHTML />
           </div>
-          <div className="w-full flex flex-col items-start justify-start gap-4">
-            {section.benefits.map((point, index) => (
-              <div
-                key={index}
-                className="w-full flex items-center justify-start gap-3"
-              >
-                <Image
-                  src={"/primary-check.svg"}
-                  alt={point.name}
-                  width={32}
-                  height={32}
-                  className="max-w-8 max-h-8 min-w-8 min-h-8 object-contain"
-                />
-                <p className="text-sm sm:text-base text-left">{point.name}</p>
-              </div>
-            ))}
-          </div>
+          <div className="flex items-start justify-start flex-col gap-3 sm:flex-wrap sm:flex-row">
           <Button asChild className="w-full sm:w-fit">
-            <Link prefetch={false} href={"/o-nas"}>
-              Viac o nás
+            <Link prefetch={false} href={"/o-nas#domov-socialnych-sluzieb"}>
+              Domov sociálnych služieb
             </Link>
           </Button>
+          <Button asChild className="w-full sm:w-fit">
+            <Link prefetch={false} href={"/o-nas#rehabilitacne-stredisko"}>
+              Rehabilizačné stredisko
+            </Link>
+          </Button>
+          <Button asChild className="w-full sm:w-fit">
+            <Link prefetch={false} href={"/o-nas#specializovane-zariadenie"}>
+              Špecializované zariadenie
+            </Link>
+          </Button>
+          </div>
         </div>
       </div>
     </section>

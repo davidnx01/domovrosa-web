@@ -131,7 +131,7 @@ html {
 }
 
 .custom-container {
-  @apply w-full max-w-[1280px];
+  @apply w-full max-w-[1410px];
 }
 
 .hero__image-overlay {
