@@ -11,7 +11,8 @@ import { Button } from "../ui/button";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
 import { Navbar } from "./navbar";
 import { TNavigation } from "@/types/navigation";
-import { TGeneral } from "@/types/general";
+
+import type { TGeneral } from "@/types/general";
 
 export async function Header({ general }: { general: TGeneral }) {
   const navigation = (await fetchData("navigation", {
@@ -39,10 +40,10 @@ export async function Header({ general }: { general: TGeneral }) {
         <Link prefetch={false} href={"/"}>
           <Image
             src={GetStrapiImage(general.logo.url)}
-            alt={"DomovROSA logo"}
+            alt={"ZSS Rosa"}
             width={131}
             height={64}
-            className="max-h-14 sm:max-h-16 min-h-14 sm:min-h-16 w-auto object-contain"
+            className="max-h-14 sm:max-h-16 min-h-14 sm:min-h-[74px] w-auto object-contain"
             sizes="300px"
           />
         </Link>

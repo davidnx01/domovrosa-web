@@ -1,15 +1,13 @@
 "use client";
 
 import React from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 import type { TInvoice, TInvoiceCategory } from "@/types/invoice";
 import { type TMeta, fetchClientData } from "@/lib/api";
-
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
-
 import { Button } from "@/components/ui/button";
 import { InvoiceCard } from "./invoice-card";
 import { InvoiceListSkeleton } from "./invoice-list-skeleton";
@@ -19,8 +17,24 @@ interface LastPageProps {
   data: TInvoice[];
 }
 
+/**
+ * Extracts the lowest year from a category name like "2021", "2020-2023", or "2011-2019".
+ * If no year is found, returns -Infinity so non-year categories appear last.
+ */
+function getCategoryYearValue(name: string): number {
+  const matches = name.match(/\d{4}/g)?.map(Number);
+  return matches ? Math.min(...matches) : -Infinity;
+}
+
 export function InvoicesList({ categories }: { categories: TInvoiceCategory[] }) {
-  const [activeTab, setActiveTab] = React.useState<string>(categories[0]?.slug );
+  // ✅ Sort categories by year (highest → lowest)
+  const sortedCategories = React.useMemo(() => {
+    return [...categories].sort(
+      (a, b) => getCategoryYearValue(b.name) - getCategoryYearValue(a.name)
+    );
+  }, [categories]);
+
+  const [activeTab, setActiveTab] = React.useState<string>(sortedCategories[0]?.slug ?? "all");
 
   const invoicesQuery = useInfiniteQuery({
     queryKey: ["invoices", activeTab],
@@ -28,9 +42,7 @@ export function InvoicesList({ categories }: { categories: TInvoiceCategory[] })
     queryFn: ({ pageParam = 1 }) =>
       fetchClientData<{
         data: {
-          pages: {
-            data: TInvoice[];
-          }[];
+          pages: { data: TInvoice[] }[];
         };
       }>("invoices", {
         populate: ["invoice_category"],
@@ -50,9 +62,7 @@ export function InvoicesList({ categories }: { categories: TInvoiceCategory[] })
   const invoices = invoicesQuery.data?.pages.flatMap((page) => page.data) ?? [];
 
   return (
-    <section
-      className={cn("custom-section", "pt-12 sm:pt-16 lg:pt-20 pb-10 lg:pb-24")}
-    >
+    <section className={cn("custom-section", "pt-12 sm:pt-16 lg:pt-20 pb-10 lg:pb-24")}>
       <div
         className={cn(
           "custom-container",
@@ -69,19 +79,18 @@ export function InvoicesList({ categories }: { categories: TInvoiceCategory[] })
               "w-full flex items-start justify-start gap-3 flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-x-hidden"
             )}
           >
-            {categories.map((tab) => (
+            {sortedCategories.map((tab) => (
               <TabsTrigger value={tab.slug} key={tab.slug}>
                 {tab.name}
               </TabsTrigger>
             ))}
           </TabsList>
+
           <TabsContent value={activeTab} className={cn("w-full")}>
             <div className="w-full grid grid-cols-1 gap-6 md:grid-cols-2">
               {invoicesQuery.isLoading && <InvoiceListSkeleton amount={7} />}
-              {!invoicesQuery.isLoading &&
-              !invoicesQuery.error &&
-              invoices &&
-              invoices.length > 0 ? (
+
+              {!invoicesQuery.isLoading && !invoicesQuery.error && invoices.length > 0 ? (
                 invoices.map((invoice, index) => (
                   <InvoiceCard invoice={invoice} key={`${invoice.code}-${index}`} />
                 ))
@@ -92,14 +101,13 @@ export function InvoicesList({ categories }: { categories: TInvoiceCategory[] })
               )}
             </div>
           </TabsContent>
+
           {invoicesQuery.hasNextPage && (
             <div className="w-full flex items-center justify-center">
               <Button
-                variant={"dark"}
+                variant="dark"
                 className="cursor-pointer"
-                disabled={
-                  invoicesQuery.isLoading || invoicesQuery.isFetchingNextPage
-                }
+                disabled={invoicesQuery.isLoading || invoicesQuery.isFetchingNextPage}
                 onClick={() => invoicesQuery.fetchNextPage()}
               >
                 Načítať ďalšie
