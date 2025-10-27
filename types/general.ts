@@ -33,3 +33,15 @@ export type TMember = TStrapiData & {
   email_1: string;
   email_2: string;
 }
+
+export type TJobOffer = TStrapiData & {
+  role: string;
+  job_description: string;
+  date_start: string;
+  employment_type: string;
+  requirements: string;
+  we_offer: string;
+  contact_person_name: string;
+  contact_person_email: string;
+  contact_person_phone: string;
+}

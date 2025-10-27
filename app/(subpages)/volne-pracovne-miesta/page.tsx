@@ -1,4 +1,4 @@
-import type { TGeneral } from "@/types/general";
+import type { TGeneral, TJobOffer } from "@/types/general";
 import type { TPage } from "@/types/page";
 
 import { SubpageHeading } from "@/components/ui/subpage-heading";
@@ -6,6 +6,10 @@ import { fetchData, fetchGeneral } from "@/lib/api";
 import { JobOffers } from "./_components/job-offers";
 
 import { generateMetadata as generateSharedMetadata } from "@/hooks/generate-metadata";
+
+interface TOffersPage extends TPage {
+  offer: TJobOffer[];
+}
 
 export async function generateMetadata() {
   const [page, general] = await Promise.all([
@@ -23,8 +27,8 @@ export async function generateMetadata() {
 
 export default async function Page() {
   const page = (await fetchData("pracovne-miesta-page", {
-    populate: ["heading", "heading.image", "tabs", "tabs.files"],
-  })) as TPage;
+    populate: ["heading", "heading.image", "tabs", "tabs.files", "offer"],
+  })) as TOffersPage;
 
   return (
     <>
@@ -33,7 +37,11 @@ export default async function Page() {
         title={page?.heading?.title}
         description={page?.heading?.description}
       />
-      <JobOffers />
+      {page?.offer && page?.offer?.length > 0 ? (
+        <JobOffers offers={page.offer} />
+      ) : (
+        <p className="text-center px-4">V súčasnosti neponúkame žiadne voľné pracovné miesta.</p>
+      )}
     </>
   );
 }

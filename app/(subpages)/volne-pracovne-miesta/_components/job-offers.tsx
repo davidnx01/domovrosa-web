@@ -1,10 +1,13 @@
 import Link from "next/link";
 
+import type { TJobOffer } from "@/types/general";
+
 import { cn } from "@/lib/utils";
 
 import { BsEnvelope } from "react-icons/bs";
+import { MdOutlinePhoneInTalk } from "react-icons/md";
 
-export function JobOffers() {
+export function JobOffers({ offers }: { offers: TJobOffer[] }) {
   return (
     <section
       className={cn("custom-section", "pt-16 sm:pt-20 lg:pt-24 pb-12 lg:pb-16")}
@@ -15,55 +18,65 @@ export function JobOffers() {
           "grid grid-cols-1 md:grid-cols-2 gap-6"
         )}
       >
-        <JobOfferCard />
+        {offers.map((offer) => (
+          <JobOfferCard key={offer.id} offer={offer} />
+        ))}
       </div>
     </section>
   );
 }
 
-function JobOfferCard() {
+function JobOfferCard({ offer }: { offer: TJobOffer }) {
   return (
     <div className="w-full col-span-1 rounded-[8px] flex flex-col items-center justify-center border border-[#D8D8D8]">
       <div className="w-full p-4 sm:p-6 lg:p-8 border-b border-b-[#D8D8D8]">
         <div className="w-full h-12 bg-secondary flex items-center justify-center font-semibold text-lg sm:text-xl text-center">
-          Fyzioterapeut
+          {offer.role}
         </div>
       </div>
       <div className="w-full p-4 sm:p-6 lg:p-8 border-b border-b-[#D8D8D8] flex flex-col items-start justify-start gap-4 sm:gap-5 lg:gap-6">
         <p className="text-sm sm:text-base">
-          <strong>Náplň práce:&nbsp;</strong>samostatná rehabilitačná práca na
-          úseku liečebnej telesnej výchovy, individuálne a v skupinách na úseku
-          fyzikálnej terapie a asistencie pri odborných liečebných výkonoch
+          <strong>Náplň práce:&nbsp;</strong>
+          {offer.job_description}
         </p>
         <p className="text-sm sm:text-base">
-          <strong>Termín nástupu:&nbsp;</strong>podľa dohody
+          <strong>Termín nástupu:&nbsp;</strong>
+          {offer.date_start}
         </p>
         <p className="text-sm sm:text-base">
-          <strong>Druh pracovného pomeru:&nbsp;</strong>pracovný pomer na dobu
-          určitú na 1 rok s možnosťou predĺženia na dobu neurčitú.
+          <strong>Druh pracovného pomeru:&nbsp;</strong>
+          {offer.employment_type}
         </p>
         <p className="text-sm sm:text-base">
-          <strong>Požiadavky na uchádzača:&nbsp;</strong>VOV v odbore
-          diplomovaný fyzioterapeut resp. VŠ i stupňa v odbore fyziatria
+          <strong>Požiadavky na uchádzača:&nbsp;</strong>
+          {offer.requirements}
         </p>
         <p className="text-sm sm:text-base">
-          <strong>Ponúkame:&nbsp;</strong>odmeňovanie v zmysle zákona č.
-          553/2003 Z. z.; odmeny dvakrát ročne, príspevok na doplnkové
-          dôchodkové sporenie
+          <strong>Ponúkame:&nbsp;</strong>
+          {offer.we_offer}
         </p>
       </div>
       <div className="w-full flex flex-col items-start justify-start p-4 sm:p-5 lg:p-6 gap-1 sm:gap-1.5">
         <p className="text-sm sm:text-base font-semibold">Kontaktná osoba</p>
-        <p className="text-sm sm:text-base">
-          Ing. Jana Mačugová, personálna referentka
-        </p>
-        <Link
-          prefetch={false}
-          href={`#`}
-          className="text-sm sm:text-base font-semibold text-primary flex items-center justify-start gap-2"
-        >
-          <BsEnvelope size={24} /> jana.macugova@domovrosa.sk
-        </Link>
+        <p className="text-sm sm:text-base">{offer.contact_person_name}</p>
+        {offer?.contact_person_email && (
+          <Link
+            prefetch={false}
+            href={`mailto:${offer.contact_person_email}`}
+            className="text-sm sm:text-base font-semibold text-primary flex items-center justify-start gap-2"
+          >
+            <BsEnvelope size={24} /> {offer.contact_person_email}
+          </Link>
+        )}
+        {offer?.contact_person_phone && (
+          <Link
+            prefetch={false}
+            href={`tel:${offer.contact_person_phone}`}
+            className="text-sm sm:text-base font-semibold text-primary flex items-center justify-start gap-2"
+          >
+            <MdOutlinePhoneInTalk size={24} /> {offer.contact_person_phone}
+          </Link>
+        )}
       </div>
     </div>
   );
