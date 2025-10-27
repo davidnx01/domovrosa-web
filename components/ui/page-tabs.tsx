@@ -1,19 +1,14 @@
 "use client";
 
-import Link from "next/link";
-
 import React from "react";
-
-import type { TTab } from "@/types/page";
-
+import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
-
-import { cn, TImage } from "@/lib/utils";
 import { Paragraph } from "./paragraph";
 import { GetStrapiImage } from "@/lib/strapi-image";
-
-import { RiDownload2Line } from "react-icons/ri";
 import { PageTabsSwiper } from "./page-tabs-swiper";
+import { RiDownload2Line } from "react-icons/ri";
+import { cn, TImage } from "@/lib/utils";
+import type { TTab } from "@/types/page";
 
 interface ClassNamesProps {
   tabs?: {
@@ -32,31 +27,79 @@ export function PageTabs({
   tabs: TTab[];
   className?: ClassNamesProps;
 }) {
-  const [activeTab, setActiveTab] = React.useState<string>(
-    tabs[0]?.id.toString()
+  // --- Helper: normalize name -> slug (vízia → vizia)
+  const slugify = React.useCallback((name: string) => {
+    return name
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // remove diacritics
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "");
+  }, []);
+
+  // --- Determine initial tab based on URL hash ---
+  const getInitialTab = React.useCallback(() => {
+    if (typeof window === "undefined") return tabs[0]?.id.toString();
+    const hash = window.location.hash.replace("#", "");
+    if (!hash) return tabs[0]?.id.toString();
+
+    const matchedTab = tabs.find((tab) => slugify(tab.name) === hash);
+    return matchedTab ? matchedTab.id.toString() : tabs[0]?.id.toString();
+  }, [tabs, slugify]);
+
+  const [activeTab, setActiveTab] = React.useState<string>(getInitialTab);
+
+  // --- Handle hashchange (Back/Forward navigation) ---
+  React.useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace("#", "");
+      const matchedTab = tabs.find((tab) => slugify(tab.name) === hash);
+      if (matchedTab) setActiveTab(matchedTab.id.toString());
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [tabs, slugify]);
+
+  // --- Ensure correct tab if loaded with hash ---
+  React.useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash) {
+      const matchedTab = tabs.find((tab) => slugify(tab.name) === hash);
+      if (matchedTab) setActiveTab(matchedTab.id.toString());
+    }
+  }, [tabs, slugify]);
+
+  // --- Update hash when clicking a tab ---
+  const handleTabChange = React.useCallback(
+    (value: string) => {
+      setActiveTab(value);
+      const currentTab = tabs.find((tab) => tab.id.toString() === value);
+      if (!currentTab) return;
+
+      const hash = slugify(currentTab.name);
+      window.history.pushState(null, "", `#${hash}`);
+    },
+    [tabs, slugify]
   );
 
   const currentTab = tabs.find((tab) => tab.id.toString() === activeTab);
-
   const allImages = [currentTab?.image, ...(currentTab?.images || [])].filter(
     (img): img is TImage => Boolean(img)
   );
 
   return (
     <Tabs
-      defaultValue={activeTab}
-      onValueChange={(value) => setActiveTab(value)}
+      value={activeTab}
+      onValueChange={handleTabChange}
       className={cn(
-        "custom-section",
-        "pt-16 sm:pt-20 lg:pt-24 pb-12 lg:pb-16 flex flex-col items-start justify-start gap-8 sm:gap-10 lg:gap-12",
-        "ea-page-tabs__tabs",
+        "custom-section pt-16 sm:pt-20 lg:pt-24 pb-12 lg:pb-16 flex flex-col items-start justify-start gap-8 sm:gap-10 lg:gap-12 ea-page-tabs__tabs",
         className?.tabs?.container
       )}
     >
       <TabsList
         className={cn(
-          "custom-container",
-          "w-full flex items-start justify-start gap-3 flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-x-hidden max-w-[875px]",
+          "custom-container w-full flex items-start justify-start gap-3 flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-x-hidden max-w-[875px]",
           className?.tabs?.tabs_list
         )}
       >
@@ -70,37 +113,32 @@ export function PageTabs({
           </TabsTrigger>
         ))}
       </TabsList>
+
       <TabsContent
         value={activeTab}
         className={cn(
-          "custom-container",
-          "flex flex-col items-start justify-start gap-12 pr-6 md:pr-0",
+          "custom-container flex flex-col items-start justify-start gap-12 pr-6 md:pr-0",
           className?.tabs?.tabs_content
         )}
       >
-        {currentTab?.content || allImages && allImages.length > 0 ? (
+        {(currentTab?.content || allImages.length > 0) && (
           <div className="w-full flex flex-col items-start justify-start gap-12 sm:gap-14 xl:gap-16 md:flex-row md:justify-between">
             {currentTab?.content && (
               <Paragraph
                 content={currentTab.content}
                 innerHTML
                 className={cn(
-                  "w-full",
-                  "page-tabs__content",
+                  "w-full page-tabs__content",
                   className?.tabs?.tabs_content_description,
-                  currentTab?.images && currentTab?.images?.length > 0
-                    ? "md:max-w-[760px]"
-                    : "md:max-w-[1500px]"
+                  currentTab?.images?.length ? "md:max-w-[760px]" : "md:max-w-[1500px]"
                 )}
               />
             )}
-            {allImages && allImages.length > 0 && (
-              <PageTabsSwiper images={allImages} />
-            )}
+            {allImages.length > 0 && <PageTabsSwiper images={allImages} />}
           </div>
-        ) : null}
+        )}
 
-        {currentTab?.files && currentTab.files.length > 0 && (
+        {currentTab?.files && currentTab?.files?.length > 0 && (
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-6">
             {currentTab.files.map((file) => (
               <Link
@@ -109,13 +147,10 @@ export function PageTabs({
                 rel="noopener noreferrer"
                 href={GetStrapiImage(file.url)}
                 className={cn(
-                  "w-full col-span-1 flex items-center justify-between bg-white rounded-[8px] p-6 lg:p-8",
-                  "ea-download-file"
+                  "w-full col-span-1 flex items-center justify-between bg-white rounded-[8px] p-6 lg:p-8 ea-download-file"
                 )}
               >
-                <p className="text-sm sm:text-base lg:text-lg xl:text-xl">
-                  {file.name}
-                </p>
+                <p className="text-sm sm:text-base lg:text-lg xl:text-xl">{file.name}</p>
                 <div className="min-w-12 max-w-12 min-h-12 max-h-12 lg:min-w-[52px] lg:max-w-[52px] lg:min-h-[52px] lg:max-h-[52px] bg-primary/10 text-primary rounded-[4px] hover:bg-primary/25 transition-all flex items-center justify-center">
                   <RiDownload2Line size={24} />
                 </div>
