@@ -51,7 +51,11 @@ export function GalleryCard({
           )}
         />
         <Image
-          src={GetStrapiImage(gallery.image.url)}
+          src={
+            gallery?.image?.url
+              ? GetStrapiImage(gallery.image.url)
+              : "/fallback.png"
+          }
           alt={gallery.name}
           width={0}
           height={0}
@@ -75,7 +79,7 @@ export function GalleryCard({
         )}
         <div className="absolute w-full h-full inset-0 z-[1] bg-black/20" />
         <Image
-          src={GetStrapiImage(gallery.image.url)}
+          src={gallery?.image?.url ? GetStrapiImage(gallery.image.url) : "/fallback.png"}
           alt={gallery.name}
           width={0}
           height={0}

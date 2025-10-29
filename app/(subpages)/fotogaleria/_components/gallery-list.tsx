@@ -22,8 +22,19 @@ interface LastPageProps {
   data: TGallery[];
 }
 
+function getCategoryYearValue(name: string): number {
+  const matches = name.match(/\d{4}/g)?.map(Number);
+  return matches ? Math.min(...matches) : -Infinity;
+}
+
 export function GalleryList({ categories }: GalleryListProps) {
   const [activeTab, setActiveTab] = React.useState<string>("all");
+
+  const sortedCategories = React.useMemo(() => {
+    return [...categories].sort(
+      (a, b) => getCategoryYearValue(b.name) - getCategoryYearValue(a.name)
+    );
+  }, [categories]);
 
   const galleriesQuery = useInfiniteQuery({
     queryKey: ["fotogalleries", activeTab],
@@ -74,12 +85,13 @@ export function GalleryList({ categories }: GalleryListProps) {
             )}
           >
             <TabsTrigger value="all">Všetky</TabsTrigger>
-            {categories.map((tab) => (
+            {sortedCategories.map((tab) => (
               <TabsTrigger value={tab.slug} key={tab.id}>
                 {tab.name}
               </TabsTrigger>
             ))}
           </TabsList>
+
           <TabsContent
             value={activeTab}
             className={cn(
@@ -87,6 +99,7 @@ export function GalleryList({ categories }: GalleryListProps) {
             )}
           >
             {galleriesQuery.isLoading && <GalleryListSkeleton amount={7} />}
+
             {!galleriesQuery.isLoading &&
             !galleriesQuery.error &&
             galleries &&
@@ -103,6 +116,7 @@ export function GalleryList({ categories }: GalleryListProps) {
                 Žiadne galérie neboli nenájdené.
               </p>
             )}
+
             {galleriesQuery.hasNextPage && (
               <div className="w-full col-span-1 sm:col-span-2 lg:col-span-3 flex items-center justify-center">
                 <Button
