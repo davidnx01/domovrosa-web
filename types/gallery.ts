@@ -14,4 +14,5 @@ export type TGallery = TStrapiData & {
   fotogallery_category: TGalleryCategory;
   image: TImage;
   content: string;
+  gallery: TImage[];
 }
