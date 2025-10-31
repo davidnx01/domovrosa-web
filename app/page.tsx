@@ -39,6 +39,7 @@ export default async function Home() {
   const blogs = (await fetchData("fotogalleries", {
     populate: ['image', 'fotogallery_category'],
     sort: "publishedAt:asc",
+    filters: { fotogallery_category: { slug: { $eq: "2025" } } },
     pagination: { pageSize: 3 },
   })) as TGallery[];
 

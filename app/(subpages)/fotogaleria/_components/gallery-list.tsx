@@ -49,10 +49,11 @@ export function GalleryList({ categories }: GalleryListProps) {
       }>("fotogalleries", {
         populate: ["image", "fotogallery_category"],
         pagination: { page: pageParam, pageSize: 7 },
+        sort: "publishedAt:desc",
         filters:
           activeTab !== "all"
             ? { fotogallery_category: { slug: { $eq: activeTab } } }
-            : undefined,
+            : { fotogallery_category: { slug: { $eq: sortedCategories[0]?.slug } } },
       }),
     getNextPageParam: (lastPage: LastPageProps) => {
       const { page, pageCount } = lastPage.meta.pagination;
@@ -121,6 +122,7 @@ export function GalleryList({ categories }: GalleryListProps) {
               <div className="w-full col-span-1 sm:col-span-2 lg:col-span-3 flex items-center justify-center">
                 <Button
                   variant={"dark"}
+                  className="cursor-pointer"
                   disabled={
                     galleriesQuery.isLoading ||
                     galleriesQuery.isFetchingNextPage
