@@ -148,7 +148,7 @@ function SidebarItem({
         <>
           <AccordionTrigger
             className={cn(
-              "w-full flex items-center justify-between py-3 text-left no-underline cursor-pointer text-lg font-normal",
+              "w-full flex items-center justify-between py-1.5 sm:py-3 text-left no-underline cursor-pointer text-lg font-normal",
               "ea-desktop-sidebar__accordion-trigger"
             )}
           >

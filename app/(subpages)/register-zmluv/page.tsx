@@ -27,11 +27,9 @@ export default async function Page() {
     populate: ["heading", "heading.image", "tabs", "tabs.images", "tabs.image"],
   })) as TPage;
 
-    const categories = (await fetchData("invoice-categories", {
-      populate: "*",
-    })) as TInvoiceCategory[];
-
-  console.log(page);
+  const categories = (await fetchData("invoice-categories", {
+    populate: "*",
+  })) as TInvoiceCategory[];
 
   return (
     <>

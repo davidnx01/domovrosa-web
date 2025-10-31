@@ -20,6 +20,7 @@ const buttonVariants = cva(
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
         dark: "bg-black text-white hover:bg-black/90",
+        accent: '!bg-[#f8cf0c] text-black hover:bg-[#f8cf0c]/90',
       },
       size: {
         "default-later-icon":

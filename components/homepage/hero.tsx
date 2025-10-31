@@ -31,7 +31,7 @@ export function Hero({ slides }: { slides: TSlider[] }) {
               "rounded-[12px] overflow-hidden relative p-6 sm:p-12 md:p-16 lg:p-[72px] flex items-start justify-end"
             )}
           >
-            <div className="w-full flex flex-col items-start justify-start gap-6 sm:gap-8 relative z-10 pt-[380px]">
+            <div className="w-full flex flex-col items-start justify-start gap-6 sm:gap-8 relative z-10 pt-[280px] sm:pt-[320px] md:pt-[380px]">
               <div className="flex flex-col items-start justify-start gap-2 sm:gap-3">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white">
                   {slide.subtitle}

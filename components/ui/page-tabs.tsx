@@ -27,17 +27,15 @@ export function PageTabs({
   tabs: TTab[];
   className?: ClassNamesProps;
 }) {
-  // --- Helper: normalize name -> slug (vízia → vizia)
   const slugify = React.useCallback((name: string) => {
     return name
       .toLowerCase()
       .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "") // remove diacritics
+      .replace(/[\u0300-\u036f]/g, "")
       .replace(/\s+/g, "-")
       .replace(/[^a-z0-9-]/g, "");
   }, []);
 
-  // --- Determine initial tab based on URL hash ---
   const getInitialTab = React.useCallback(() => {
     if (typeof window === "undefined") return tabs[0]?.id.toString();
     const hash = window.location.hash.replace("#", "");
@@ -49,7 +47,6 @@ export function PageTabs({
 
   const [activeTab, setActiveTab] = React.useState<string>(getInitialTab);
 
-  // --- Handle hashchange (Back/Forward navigation) ---
   React.useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace("#", "");
@@ -61,7 +58,6 @@ export function PageTabs({
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, [tabs, slugify]);
 
-  // --- Ensure correct tab if loaded with hash ---
   React.useEffect(() => {
     const hash = window.location.hash.replace("#", "");
     if (hash) {
@@ -70,7 +66,6 @@ export function PageTabs({
     }
   }, [tabs, slugify]);
 
-  // --- Update hash when clicking a tab ---
   const handleTabChange = React.useCallback(
     (value: string) => {
       setActiveTab(value);

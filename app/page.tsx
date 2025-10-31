@@ -42,9 +42,6 @@ export default async function Home() {
     pagination: { pageSize: 3 },
   })) as TGallery[];
 
-
-
-
   return (
     <main>
       <Hero slides={slider.slides} />

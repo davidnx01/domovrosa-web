@@ -54,7 +54,7 @@ export function Blogs({
           }}
         >
           {blogs.map((blog) => (
-            <SwiperSlide key={blog.slug} className="max-w-[410px] w-full">
+            <SwiperSlide key={blog.slug} className="max-w-[340px] sm:max-w-[365px] md:max-w-[380px] lg:max-w-[454px] w-full">
               <GalleryCard key={blog.slug} gallery={blog} />
             </SwiperSlide>
           ))}

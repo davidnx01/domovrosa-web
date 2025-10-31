@@ -147,6 +147,12 @@ html {
   padding-bottom: 56px !important;
 }
 
+@media (max-width: 768px) {
+  .hero-swiper {
+    padding-bottom: 12px !important;
+  }
+}
+
 .hero-swiper .swiper-pagination-bullet {
   height: 14px !important;
   width: 14px !important;

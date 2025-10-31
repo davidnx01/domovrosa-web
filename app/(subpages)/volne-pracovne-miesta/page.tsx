@@ -40,7 +40,7 @@ export default async function Page() {
       {page?.offer && page?.offer?.length > 0 ? (
         <JobOffers offers={page.offer} />
       ) : (
-        <p className="text-center px-4">V súčasnosti neponúkame žiadne voľné pracovné miesta.</p>
+        <p className="text-center px-4 min-h-[300px] flex items-center justify-center">Momentálne neevidujeme žiadne voľné pracovné miesta.</p>
       )}
     </>
   );
