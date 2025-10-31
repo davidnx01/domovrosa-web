@@ -49,7 +49,7 @@ export function GalleryList({ categories }: GalleryListProps) {
       }>("fotogalleries", {
         populate: ["image", "fotogallery_category"],
         pagination: { page: pageParam, pageSize: 7 },
-        sort: "publishedAt:desc",
+        sort: "createdAt:desc",
         filters:
           activeTab !== "all"
             ? { fotogallery_category: { slug: { $eq: activeTab } } }
