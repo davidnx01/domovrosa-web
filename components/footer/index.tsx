@@ -6,7 +6,6 @@ import type { TGeneral } from "@/types/general";
 import { fetchData } from "@/lib/api";
 import { TFooterSection } from "@/types/sections";
 import { cn } from "@/lib/utils";
-import { Heading } from "../ui/heading";
 import { PartnersSwiper } from "./partners-swiper";
 import { GetStrapiImage } from "@/lib/strapi-image";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
@@ -29,13 +28,6 @@ const footerSection = (await fetchData("footer-section", {
           "flex flex-col items-center justify-center gap-10 sm:gap-12"
         )}
       >
-        <Heading
-          subtitle={footerSection?.heading?.subtitle}
-          title={footerSection?.heading?.title}
-          className={{
-            container: "items-center justify-center text-center px-6",
-          }}
-        />
         <PartnersSwiper partners={footerSection?.partners} />
       </div>
       <div className={cn("custom-section")}>

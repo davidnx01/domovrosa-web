@@ -13,10 +13,6 @@ import { MdOutlinePhoneInTalk } from "react-icons/md";
 import { BsEnvelope } from "react-icons/bs";
 
 export function MembersContent({ members }: { members: TMember[] }) {
-  const orderedMembers = [...members].sort((a, b) =>
-    a.id === 33 ? -1 : b.id === 33 ? 1 : 0
-  );
-
   return (
     <TabsContent
       value="Kontaktné osoby"
@@ -25,7 +21,7 @@ export function MembersContent({ members }: { members: TMember[] }) {
         "grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 xl:gap-12"
       )}
     >
-      {orderedMembers.map((member, index) => (
+      {members.map((member, index) => (
         <MemberCard key={`${member.id}-${index}`} member={member} />
       ))}
     </TabsContent>
