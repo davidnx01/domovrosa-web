@@ -142,7 +142,7 @@ export function PageTabs({
                 href={GetStrapiImage(file.url)}
                 className="w-full col-span-1 flex items-center justify-between bg-white rounded-[8px] p-6 lg:p-8 ea-download-file"
               >
-                <p className="text-sm sm:text-base lg:text-lg xl:text-xl">
+                <p className="text-sm sm:text-base lg:text-lg xl:text-xl line-clamp-1 pr-4 overflow-ellipsis">
                   {file.name}
                 </p>
                 <div className="min-w-12 max-w-12 min-h-12 max-h-12 lg:min-w-[52px] lg:max-w-[52px] lg:min-h-[52px] lg:max-h-[52px] bg-primary/10 text-primary rounded-[4px] hover:bg-primary/25 transition-all flex items-center justify-center">
