@@ -12,9 +12,9 @@ import { MdOutlinePhoneInTalk } from "react-icons/md";
 import { BsEnvelopeAt } from "react-icons/bs";
 
 export async function Footer({ general }: { general: TGeneral }) {
-const footerSection = (await fetchData("footer-section", {
-  populate: ["heading", "partners", "partners.image", "menus", "menus.items"],
-})) as TFooterSection;
+  const footerSection = (await fetchData("footer-section", {
+    populate: ["heading", "partners", "partners.image", "menus", "menus.items"],
+  })) as TFooterSection;
 
   return (
     <footer
@@ -78,7 +78,9 @@ const footerSection = (await fetchData("footer-section", {
                 </Link>
               </div>
             </div>
-            <p className="hidden sm:block">&copy; DomovROSA, {new Date().getFullYear()}</p>
+            <p className="hidden sm:block">
+              &copy; DomovROSA, {new Date().getFullYear()}
+            </p>
           </div>
           {footerSection.menus.map((menu) => (
             <div
@@ -127,7 +129,9 @@ const footerSection = (await fetchData("footer-section", {
               </Link>
             </div>
           </div>
-          <p className="block sm:hidden">&copy; DomovROSA, {new Date().getFullYear()}</p>
+          <p className="block sm:hidden">
+            &copy; DomovROSA, {new Date().getFullYear()}
+          </p>
         </div>
       </div>
     </footer>

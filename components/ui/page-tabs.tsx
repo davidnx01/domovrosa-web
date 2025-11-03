@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
 import { Paragraph } from "./paragraph";
 import { GetStrapiImage } from "@/lib/strapi-image";
@@ -27,6 +28,9 @@ export function PageTabs({
   tabs: TTab[];
   className?: ClassNamesProps;
 }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const slugify = React.useCallback((name: string) => {
     return name
       .toLowerCase()
@@ -47,24 +51,17 @@ export function PageTabs({
 
   const [activeTab, setActiveTab] = React.useState<string>(getInitialTab);
 
-  React.useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace("#", "");
-      const matchedTab = tabs.find((tab) => slugify(tab.name) === hash);
-      if (matchedTab) setActiveTab(matchedTab.id.toString());
-    };
-
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [tabs, slugify]);
-
+  // ✅ React to Next.js SPA hash changes (fix bug)
   React.useEffect(() => {
     const hash = window.location.hash.replace("#", "");
-    if (hash) {
-      const matchedTab = tabs.find((tab) => slugify(tab.name) === hash);
-      if (matchedTab) setActiveTab(matchedTab.id.toString());
+    const matchedTab = tabs.find((tab) => slugify(tab.name) === hash);
+
+    if (matchedTab) {
+      setActiveTab(matchedTab.id.toString());
+    } else {
+      setActiveTab(tabs[0]?.id.toString());
     }
-  }, [tabs, slugify]);
+  }, [pathname, searchParams, tabs, slugify]);
 
   const handleTabChange = React.useCallback(
     (value: string) => {
@@ -125,7 +122,9 @@ export function PageTabs({
                 className={cn(
                   "w-full page-tabs__content",
                   className?.tabs?.tabs_content_description,
-                  currentTab?.images?.length ? "md:max-w-[760px]" : "md:max-w-[1500px]"
+                  currentTab?.images?.length
+                    ? "md:max-w-[760px]"
+                    : "md:max-w-[1500px]"
                 )}
               />
             )}
@@ -141,11 +140,11 @@ export function PageTabs({
                 target="_blank"
                 rel="noopener noreferrer"
                 href={GetStrapiImage(file.url)}
-                className={cn(
-                  "w-full col-span-1 flex items-center justify-between bg-white rounded-[8px] p-6 lg:p-8 ea-download-file"
-                )}
+                className="w-full col-span-1 flex items-center justify-between bg-white rounded-[8px] p-6 lg:p-8 ea-download-file"
               >
-                <p className="text-sm sm:text-base lg:text-lg xl:text-xl">{file.name}</p>
+                <p className="text-sm sm:text-base lg:text-lg xl:text-xl">
+                  {file.name}
+                </p>
                 <div className="min-w-12 max-w-12 min-h-12 max-h-12 lg:min-w-[52px] lg:max-w-[52px] lg:min-h-[52px] lg:max-h-[52px] bg-primary/10 text-primary rounded-[4px] hover:bg-primary/25 transition-all flex items-center justify-center">
                   <RiDownload2Line size={24} />
                 </div>
