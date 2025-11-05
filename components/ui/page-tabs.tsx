@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
@@ -10,6 +10,8 @@ import { PageTabsSwiper } from "./page-tabs-swiper";
 import { RiDownload2Line } from "react-icons/ri";
 import { cn, TImage } from "@/lib/utils";
 import type { TTab } from "@/types/page";
+import { useDisclosure } from "@/hooks/use-disclosure";
+import { LightboxComponent } from "../lightbox/lightbox-component";
 
 interface ClassNamesProps {
   tabs?: {

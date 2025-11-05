@@ -2,7 +2,6 @@ import type { TGeneral } from "@/types/general";
 import type { TPage } from "@/types/page";
 import type { TImage } from "@/lib/utils";
 
-import { PageGallery } from "@/components/ui/page-gallery";
 import { PageTabs } from "@/components/ui/page-tabs";
 import { SubpageHeading } from "@/components/ui/subpage-heading";
 import { fetchData, fetchGeneral } from "@/lib/api";
@@ -29,7 +28,15 @@ interface TCinnostPage extends TPage {
 
 export default async function Page() {
   const page = (await fetchData("zaujmova-cinnost-page", {
-    populate: ["heading", "heading.image", "tabs", "tabs.files", "gallery"],
+    populate: [
+      "heading",
+      "heading.image",
+      "tabs",
+      "tabs.image",
+      "tabs.images",
+      "tabs.files",
+      "gallery",
+    ],
   })) as TCinnostPage;
 
   return (
@@ -40,7 +47,6 @@ export default async function Page() {
         description={page?.heading?.description}
       />
       <PageTabs tabs={page.tabs} />
-      <PageGallery gallery={page.gallery} />
     </>
   );
 }
