@@ -39,8 +39,8 @@ export function SubpageHeading({
         )}
       </div>
       <div className="absolute z-[1] w-full h-full bg-white/35 inset-0" />
-      <Image 
-        src={GetStrapiImage(image.url)}
+      <Image
+        src={image ? GetStrapiImage(image?.url) : "/placeholder.png"}
         alt={title}
         width={0}
         height={0}
@@ -51,4 +51,4 @@ export function SubpageHeading({
       />
     </section>
   );
-};
+}

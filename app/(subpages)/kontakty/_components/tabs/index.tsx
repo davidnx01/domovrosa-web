@@ -25,7 +25,7 @@ export function ContactTabs({
       onValueChange={(value) => setActiveTab(value)}
       className={cn(
         "custom-section",
-        "flex flex-col items-start justify-start gap-12 sm:gap-14 lg:gap-16 pb-16 sm:pb-20 lg:pb-24"
+        "flex flex-col items-start justify-start gap-12 sm:gap-14 lg:gap-16 py-16 sm:py-20 lg:py-24"
         
       )}
     >

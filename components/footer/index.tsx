@@ -49,34 +49,6 @@ export async function Footer({ general }: { general: TGeneral }) {
                   sizes="100vw"
                 />
               </Link>
-              <p className="text-sm sm:text-base">
-                Kontaktujte nás:{" "}
-                <Link
-                  prefetch={false}
-                  href={`mailto:${general.email}`}
-                  className="font-bold"
-                  target="_blank"
-                >
-                  {general.email}
-                </Link>
-              </p>
-              <div className="flex items-start justify-start gap-3.5">
-                <p className="text-black/70 text-sm md:text-base">
-                  Zriaďovateľ:
-                </p>
-                <Link
-                  prefetch={false}
-                  href={"https://bratislavskykraj.sk/"}
-                  target="_blank"
-                >
-                  <Image
-                    src={"/bsk.png"}
-                    alt="Bratislavský samosprávny kraj"
-                    width={154}
-                    height={53}
-                  />
-                </Link>
-              </div>
             </div>
             <p className="hidden sm:block">
               &copy; DomovROSA, {new Date().getFullYear()}
@@ -106,28 +78,20 @@ export async function Footer({ general }: { general: TGeneral }) {
           ))}
           <div className="w-full col-span-1 flex flex-col items-start justify-start gap-4">
             <h4 className="font-bold text-sm sm:text-base xl:text-lg">
-              Kontakt
+              Zriaďovateľ
             </h4>
-            <div className="flex flex-col gap-2.5 w-full">
-              <Link
-                prefetch={false}
-                target="_blank"
-                href={`tel:${general.phone}`}
-                className="flex items-center justify-start gap-2.5 text-sm sm:text-base hover:opacity-70 transition-all"
-              >
-                <MdOutlinePhoneInTalk size={24} />
-                <p className="text-black/70">{general.phone}</p>
-              </Link>
-              <Link
-                prefetch={false}
-                target="_blank"
-                href={`mailto:${general.email}`}
-                className="flex items-center justify-start gap-2.5 text-sm sm:text-base hover:opacity-70 transition-all"
-              >
-                <BsEnvelopeAt size={24} />
-                <p className="text-black/70">{general.email}</p>
-              </Link>
-            </div>
+            <Link
+              prefetch={false}
+              href={"https://bratislavskykraj.sk/"}
+              target="_blank"
+            >
+              <Image
+                src={"/bsk.png"}
+                alt="Bratislavský samosprávny kraj"
+                width={154}
+                height={53}
+              />
+            </Link>
           </div>
           <p className="block sm:hidden">
             &copy; DomovROSA, {new Date().getFullYear()}

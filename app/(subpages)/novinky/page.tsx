@@ -19,9 +19,9 @@ export default async function Page() {
   return (
     <>
       <SubpageHeading
-        image={page.heading.image}
-        title={page.heading.title}
-        description={page.heading.description}
+        image={page?.heading?.image}
+        description={page?.heading?.description}
+        title={'Novinky'}
       />
       <PageTabs tabs={page.tabs} />
     </>

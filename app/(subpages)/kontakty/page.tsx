@@ -39,7 +39,7 @@ export default async function Page() {
         title={page?.heading?.title}
         description={page?.heading?.description}
       />
-      <ContactCards general={general} />
+      {/* <ContactCards general={general} /> */}
       <ContactTabs general={general} members={members} />
     </>
   );
