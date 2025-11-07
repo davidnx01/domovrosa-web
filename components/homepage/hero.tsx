@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import { GetStrapiImage } from "@/lib/strapi-image";
 import { Button } from "../ui/button";
 
@@ -19,7 +19,10 @@ export function Hero({ slides }: { slides: TSlider[] }) {
     <section className={cn("custom-section", "pt-10 lg:pt-12 bg-primary/10 pb-8")}>
       <Swiper
         pagination={true}
-        modules={[Pagination]}
+        modules={[Pagination, Autoplay]}
+        autoplay={{
+          delay: 3000,
+        }}
         loop={true}
         className={cn("custom-container", "mySwiper", "hero-swiper")}
       >

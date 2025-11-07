@@ -34,35 +34,3 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-
-
-  const { data: posts, isLoading, error } = useQuery<Post[], Error>({
-    queryKey: ['posts'],
-    queryFn: () =>
-      fetchStrapiData<Post>('posts', {
-        populate: 'author',
-        sort: 'title:asc',
-        pagination: { pageSize: 10 },
-      }),
-  });
-
-
-
-  queryKey: ["fotogalleries", activeTab],
-    queryFn: () =>
-      fetchClientData<{
-        data: TGallery[];
-        meta: TMeta;
-      }>("fotogalleries", {
-        populate: ["image", "fotogallery_category"],
-        pagination: { pageSize: 8 },
-        filters:
-          activeTab !== "all"
-            ? { fotogallery_category: { slug: { $eq: activeTab } } }
-            : undefined,
-      }),
-
-
-
-            <InvoicesList categories={categories} />

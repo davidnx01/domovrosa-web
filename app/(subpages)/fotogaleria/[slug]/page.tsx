@@ -6,49 +6,11 @@ import { fetchData } from "@/lib/api";
 import { GetStrapiImage } from "@/lib/strapi-image";
 import { cn } from "@/lib/utils";
 import { GalleryCard } from "@/components/gallery/gallery-card";
+import { OpenGalleryButton } from "../_components/open-gallery-button";
 
-
-// Define the props type explicitly
 interface PageProps {
   params: { slug: string };
 }
-
-// export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-//   const [photogalleryData, general] = await Promise.all([
-//     fetchData(
-//       `fotogalleries?populate=*&filters[slug][$eq]=${params?.slug ?? ""}`
-//     ) as Promise<TGallery[]>,
-//     fetchGeneral() as Promise<TGeneral>,
-//   ]);
-
-//   const photogallery = photogalleryData?.[0];
-//   if (!photogallery) return {};
-
-//   const text = photogallery.content
-//     .replace(/<[^>]*>/g, " ")
-//     .replace(/&nbsp;/g, " ")
-//     .replace(/&amp;/g, "&")
-//     .replace(/\s+/g, " ")
-//     .trim();
-
-//   const description =
-//     photogallery.content.length > 160
-//       ? text.slice(0, text.lastIndexOf(" ", 160)) + "…"
-//       : text;
-
-//   return generateSharedMetadata({
-//     seo: {
-//       title: photogallery.name,
-//       description,
-//       openGraph: {
-//         title: photogallery.name,
-//         description,
-//         image: photogallery.image,
-//       },
-//     },
-//     general,
-//   });
-// }
 
 export default async function Page({ params }: PageProps) {
   const photogalleryData = (await fetchData(
@@ -59,27 +21,32 @@ export default async function Page({ params }: PageProps) {
 
   const galleriesData = (await fetchData("fotogalleries", {
     populate: ["image", "fotogallery_category"],
-    sort: "publishedAt:asc",
-    pagination: { pageSize: 8 },
+    sort: "publishedAt:desc",
+    pagination: { pageSize: 3 },
   })) as TGallery[];
 
   const galleries = galleriesData.filter((g) => g.slug !== photogallery.slug);
 
+  const allImages = [photogallery.image, ...photogallery.gallery];
+
   return (
     <article className="w-full flex flex-col items-center justify-center">
-      <Image
-        src={GetStrapiImage(photogallery.image?.url)}
-        alt={photogallery.name}
-        width={0}
-        height={0}
-        className={cn(
-          "custom-container",
-          "h-[400px] sm:h-[500px] lg:h-[600px] object-cover object-center rounded-b-[4px] sm:rounded-b-[6px] lg:rounded-b-[8px]"
-        )}
-        sizes="100vw"
-        priority
-        loading="eager"
-      />
+      <div className={cn('custom-container', 'relative')}>
+        <OpenGalleryButton allImages={allImages} />
+        <Image
+          src={GetStrapiImage(photogallery.image?.url)}
+          alt={photogallery.name}
+          width={0}
+          height={0}
+          className={cn(
+            "custom-container",
+            "h-[400px] sm:h-[500px] lg:h-[600px] object-cover object-center rounded-b-[4px] sm:rounded-b-[6px] lg:rounded-b-[8px]"
+          )}
+          sizes="100vw"
+          priority
+          loading="eager"
+        />
+      </div>
       <section
         className={cn("custom-section", "py-12 sm:py-16 lg:py-20 xl:py-24")}
       >
