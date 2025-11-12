@@ -21,7 +21,7 @@ export function Hero({ slides }: { slides: TSlider[] }) {
         pagination={true}
         modules={[Pagination, Autoplay]}
         autoplay={{
-          delay: 3000,
+          delay: 5500,
         }}
         loop={true}
         className={cn("custom-container", "mySwiper", "hero-swiper")}
