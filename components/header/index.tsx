@@ -69,8 +69,7 @@ export async function Header({ general }: { general: TGeneral }) {
               alt={"ZSS Rosa"}
               width={131}
               height={64}
-              className="max-h-14 sm:max-h-16 min-h-14 sm:min-h-[74px] w-auto object-contain relative z-10"
-              sizes="300px"
+              className="w-36 sm:w-46 h-auto relative z-[2] object-cover max-h-[74px] sm:max-h-[110px]"
             />
             <p className="bg-primary py-1.5 px-3 rounded-[4px] whitespace-nowrap text-xs sm:text-sm z-[1] mt-1 sm:mt-2">
               Všetci môžu rásť...
