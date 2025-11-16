@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer";
 import { fetchGeneral } from "@/lib/api";
 import { TGeneral } from "@/types/general";
 import { AppProvider } from "@/components/ui/app-provider";
+import { CookieConsentComponent } from "@/components/cookie-consent/cookie-consent";
 
 const font = Poppins({
   variable: "--font-poppins",
@@ -33,7 +34,8 @@ export default async function RootLayout({
       <body className={`${font.variable} ${font.className} antialiased`}>
         <AppProvider>
           <Header general={general} />
-          {children}
+          <CookieConsentComponent />
+          <main>{children}</main>
           <Footer general={general} />
         </AppProvider>
       </body>
