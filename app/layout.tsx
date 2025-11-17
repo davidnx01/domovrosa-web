@@ -8,6 +8,7 @@ import { fetchGeneral } from "@/lib/api";
 import { TGeneral } from "@/types/general";
 import { AppProvider } from "@/components/ui/app-provider";
 import { CookieConsentComponent } from "@/components/cookie-consent/cookie-consent";
+import "vanilla-cookieconsent/dist/cookieconsent.css";
 
 const font = Poppins({
   variable: "--font-poppins",

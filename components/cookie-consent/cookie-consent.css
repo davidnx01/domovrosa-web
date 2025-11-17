@@ -3,8 +3,8 @@
   --cc-font-family: var(--font-sans);
 
   --cc-bg: #ffffff;
-  --cc-primary-color: var(--primary);
-  --cc-secondary-color: #A2D9F7;
+  --cc-primary-color: black;
+  --cc-secondary-color: black;
 
   /** Change button primary color to black **/
   --cc-btn-primary-bg: var(--primary);

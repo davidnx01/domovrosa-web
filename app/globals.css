@@ -271,3 +271,15 @@ html {
 .page-tabs__content > figure > table > tbody td strong {
   @apply text-sm sm:text-base;
 }
+
+button.cm__btn > span {
+  color: black !important;
+}
+
+h2.cm__title {
+  color: black !important;
+}
+
+p.cm__desc {
+  color: rgba(0, 0, 0, 0.75) !important;
+}
