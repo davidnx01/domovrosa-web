@@ -102,7 +102,7 @@ function MemberCard({ member }: { member: TMember }) {
         <div className="w-full flex flex-col items-start justify-start gap-0">
           {member?.role && (
             <p className="font-semibold text-primary">
-              {member.role} {member.id}
+              {member.role}
             </p>
           )}
           <h5 className="font-bold">{member?.name}</h5>
