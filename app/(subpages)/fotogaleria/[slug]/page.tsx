@@ -14,20 +14,20 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   const photogalleryData = (await fetchData(
-    `fotogalleries?populate=*&filters[slug][$eq]=${params.slug}`
+    `fotogalleries?filters[slug][$eq]=${params.slug}&populate=*`
   )) as TGallery[];
 
   const photogallery = photogalleryData[0];
 
   const galleriesData = (await fetchData("fotogalleries", {
-    populate: ["image", "fotogallery_category"],
+    populate: ["image", "fotogallery_category", "gallery"],
     sort: "publishedAt:desc",
     pagination: { pageSize: 3 },
   })) as TGallery[];
 
   const galleries = galleriesData.filter((g) => g.slug !== photogallery.slug);
 
-  const allImages = [photogallery.image, ...photogallery.gallery];
+  const allImages = [photogallery.image, ...photogallery?.gallery || []];
 
   return (
     <article className="w-full flex flex-col items-center justify-center">
