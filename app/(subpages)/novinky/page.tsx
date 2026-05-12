@@ -13,6 +13,7 @@ export default async function Page() {
       "tabs",
       "tabs.image",
       "tabs.images",
+      "tabs.files",
     ],
   })) as TPage;
 
@@ -21,7 +22,7 @@ export default async function Page() {
       <SubpageHeading
         image={page?.heading?.image}
         description={page?.heading?.description}
-        title={'Novinky'}
+        title={"Novinky"}
       />
       <PageTabs tabs={page.tabs} />
     </>
