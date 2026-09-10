@@ -10,14 +10,20 @@ import {
 export const COOKIE_INFO_URL = "/gdpr";
 
 /**
- * Identifikačné údaje prevádzkovateľa a zodpovednej osoby – prevzaté zo
- * Zásad spracúvania osobných údajov fyzických osôb v ZSS ROSA.
+ * Identifikačné údaje prevádzkovateľa – prevzaté zo Zásad spracúvania
+ * osobných údajov fyzických osôb v ZSS ROSA.
+ *
+ * Pozn.: Zásady z roku 2019 uvádzajú ako kontakt na zodpovednú osobu
+ * adresu zodpovednaosoba@domovrosa.sk. Podľa aktuálneho zadania je
+ * zodpovednou osobou Martin Tekula – pri najbližšej aktualizácii Zásad
+ * treba kontakt zosúladiť aj tam.
  */
 export const CONTROLLER = {
   name: "Zariadenie sociálnych služieb ROSA",
   address: "Dúbravská cesta 1, 845 29 Bratislava",
   ico: "00603279",
-  dpoEmail: "zodpovednaosoba@domovrosa.sk",
+  dpoName: "Martin Tekula",
+  dpoEmail: "martin.tekula@domovrosa.sk",
 } as const;
 
 const cookieTableHeaders = {
@@ -111,7 +117,7 @@ export const getCookieConsentConfig = (): CookieConsentConfig => {
             acceptNecessaryBtn: "Odmietnuť všetko",
             showPreferencesBtn: "Prispôsobiť",
             footer: `<a href="${COOKIE_INFO_URL}" target="_blank" rel="noopener noreferrer">Zásady spracúvania osobných údajov</a>
-              <a href="mailto:${CONTROLLER.dpoEmail}">Zodpovedná osoba</a>`,
+              <a href="mailto:${CONTROLLER.dpoEmail}">Zodpovedná osoba za ochranu osobných údajov</a>`,
           },
           preferencesModal: {
             title: "Nastavenia súborov cookies",
@@ -127,7 +133,7 @@ export const getCookieConsentConfig = (): CookieConsentConfig => {
                   <br /><br />
                   Súhlas je dobrovoľný a môžete ho <strong>kedykoľvek bezplatne odvolať</strong> alebo zmeniť – kliknutím na ikonu koláčika v ľavom dolnom rohu webstránky alebo na odkaz „Nastavenia cookies“ v pätičke. Odvolanie súhlasu nemá vplyv na zákonnosť spracúvania pred jeho odvolaním.
                   <br /><br />
-                  <strong>Prevádzkovateľ:</strong> ${CONTROLLER.name}, ${CONTROLLER.address}, IČO: ${CONTROLLER.ico}. <strong>Zodpovedná osoba za ochranu osobných údajov:</strong> <a href="mailto:${CONTROLLER.dpoEmail}">${CONTROLLER.dpoEmail}</a>.
+                  <strong>Prevádzkovateľ:</strong> ${CONTROLLER.name}, ${CONTROLLER.address}, IČO: ${CONTROLLER.ico}. <strong>Zodpovedná osoba za ochranu osobných údajov:</strong> ${CONTROLLER.dpoName}, <a href="mailto:${CONTROLLER.dpoEmail}">${CONTROLLER.dpoEmail}</a>.
                   <br /><br />
                   Máte právo na prístup k údajom, ich opravu a výmaz, na obmedzenie spracúvania, na prenosnosť údajov a právo namietať. Pri spracúvaní vašich údajov <strong>nedochádza k automatizovanému rozhodovaniu ani profilovaniu</strong>. Podrobnosti nájdete v dokumente <a href="${COOKIE_INFO_URL}" target="_blank" rel="noopener noreferrer">Zásady spracúvania osobných údajov</a>.
                   <br /><br />
@@ -161,7 +167,7 @@ export const getCookieConsentConfig = (): CookieConsentConfig => {
                 title: "Ďalšie informácie",
                 description: `Zoznam súborov cookies pravidelne kontrolujeme a aktualizujeme. <strong>Posledná aktualizácia: ${COOKIES_LAST_REVIEW}.</strong>
                   <br /><br />
-                  Súbory cookies môžete kedykoľvek vymazať aj priamo v nastaveniach svojho prehliadača. S otázkami k spracúvaniu vašich osobných údajov sa obráťte na zodpovednú osobu na adrese <a href="mailto:${CONTROLLER.dpoEmail}">${CONTROLLER.dpoEmail}</a>, prípadne nás <a href="/kontakty" target="_blank" rel="noopener noreferrer">kontaktujte</a>.`,
+                  Súbory cookies môžete kedykoľvek vymazať aj priamo v nastaveniach svojho prehliadača. S otázkami k spracúvaniu vašich osobných údajov sa obráťte na zodpovednú osobu ${CONTROLLER.dpoName} na adrese <a href="mailto:${CONTROLLER.dpoEmail}">${CONTROLLER.dpoEmail}</a>, prípadne nás <a href="/kontakty" target="_blank" rel="noopener noreferrer">kontaktujte</a>.`,
               },
             ],
           },
