@@ -1,11 +1,12 @@
-'use client';
+"use client";
 
-import './cookie-consent.css';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import * as CookieConsent from 'vanilla-cookieconsent';
-import 'vanilla-cookieconsent/dist/cookieconsent.css';
-import { getCookieConsentConfig } from './cookie-consent-config';
+import "vanilla-cookieconsent/dist/cookieconsent.css";
+// Vlastné štýly musia byť načítané až po štýloch knižnice.
+import "./cookie-consent.css";
+import { useEffect, useState } from "react";
+import * as CookieConsent from "vanilla-cookieconsent";
+import { getCookieConsentConfig } from "./cookie-consent-config";
+import { CookieConsentFab } from "./cookie-consent-fab";
 
 declare global {
   interface Window {
@@ -15,12 +16,8 @@ declare global {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function CookieConsentComponent() {
-  const searchParams = useSearchParams();
-  const openCC = searchParams.get('occ');
-
-   const [isInitialized, setIsInitialized] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     setIsInitialized(true);
@@ -32,16 +29,22 @@ export function CookieConsentComponent() {
     listenForConsent();
     CookieConsent.run(getCookieConsentConfig());
 
-    if (openCC === 'true') {
+    // Podpora priameho odkazu ?occ=true (napr. z e-mailu alebo z iného
+    // dokumentu) na otvorenie nastavení cookies.
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get("occ") === "true") {
       CookieConsent.showPreferences();
-      const searchParams = new URLSearchParams(window.location.search);
-      searchParams.delete('occ');
-      window.history.pushState({}, '', `${window.location.pathname}?${searchParams.toString()}`);
+      searchParams.delete("occ");
+      const query = searchParams.toString();
+      window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}${query ? `?${query}` : ""}`
+      );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isInitialized, openCC]);
+  }, [isInitialized]);
 
-  return <></>;
+  return <CookieConsentFab />;
 }
 
 const listenForConsent = () => {
@@ -55,39 +58,45 @@ const listenForConsent = () => {
       window.dataLayer?.push(arguments);
     };
 
-  // isGtag &&
-  window.gtag('consent', 'default', {
-    ad_storage: 'denied',
-    ad_user_data: 'denied',
-    ad_personalization: 'denied',
-    analytics_storage: 'denied',
-    functionality_storage: 'denied',
-    personalization_storage: 'denied',
-    security_storage: 'granted',
-    wait_for_update: 500, // Add this line
+  // Predvolene je všetko zamietnuté, kým návštevník neudelí súhlas.
+  window.gtag("consent", "default", {
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    analytics_storage: "denied",
+    functionality_storage: "denied",
+    personalization_storage: "denied",
+    security_storage: "granted",
+    wait_for_update: 500,
   });
 
   const updateGtagConsent = () => {
-    // if (!isGtag) return;
-    window.gtag('consent', 'update', {
-      ad_storage: CookieConsent.acceptedCategory('ads') ? 'granted' : 'denied',
-      ad_user_data: CookieConsent.acceptedCategory('ads') ? 'granted' : 'denied',
-      ad_personalization: CookieConsent.acceptedCategory('ads') ? 'granted' : 'denied',
-      analytics_storage: CookieConsent.acceptedCategory('analytics') ? 'granted' : 'denied',
-      functionality_storage: CookieConsent.acceptedCategory('functional') ? 'granted' : 'denied',
-      personalization_storage: CookieConsent.acceptedCategory('functional') ? 'granted' : 'denied',
-      security_storage: 'granted', //necessary
+    window.gtag?.("consent", "update", {
+      // Analytické ani reklamné cookies na webe nepoužívame – zostávajú
+      // natrvalo zamietnuté. Pri ich prípadnom nasadení stačí doplniť
+      // príslušné kategórie do konfigurácie cookie lišty.
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      analytics_storage: "denied",
+      functionality_storage: CookieConsent.acceptedCategory("functional")
+        ? "granted"
+        : "denied",
+      personalization_storage: CookieConsent.acceptedCategory("functional")
+        ? "granted"
+        : "denied",
+      security_storage: "granted", // nevyhnutné
     });
     window.dataLayer?.push({
-      event: 'cookie_consent_update',
+      event: "cookie_consent_update",
     });
   };
 
-  window.addEventListener('cc:onConsent', () => {
+  window.addEventListener("cc:onConsent", () => {
     updateGtagConsent();
   });
 
-  window.addEventListener('cc:onChange', () => {
+  window.addEventListener("cc:onChange", () => {
     updateGtagConsent();
   });
 };

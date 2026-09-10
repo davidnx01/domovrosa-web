@@ -10,6 +10,7 @@ import { PartnersSwiper } from "./partners-swiper";
 import { GetStrapiImage } from "@/lib/strapi-image";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
 import { BsEnvelopeAt } from "react-icons/bs";
+import { CookieSettingsLink } from "../cookie-consent/cookie-settings-link";
 
 export async function Footer({ general }: { general: TGeneral }) {
   const footerSection = (await fetchData("footer-section", {
@@ -50,9 +51,10 @@ export async function Footer({ general }: { general: TGeneral }) {
                 />
               </Link>
             </div>
-            <p className="hidden sm:block">
-              &copy; DomovROSA, {new Date().getFullYear()}
-            </p>
+            <div className="hidden sm:flex flex-col items-start justify-start gap-2.5">
+              <p>&copy; DomovROSA, {new Date().getFullYear()}</p>
+              <CookieSettingsLink className="text-sm sm:text-base text-black/70 transition-all hover:text-black/50 cursor-pointer text-left" />
+            </div>
           </div>
           {footerSection.menus.map((menu) => (
             <div
@@ -93,9 +95,10 @@ export async function Footer({ general }: { general: TGeneral }) {
               />
             </Link>
           </div>
-          <p className="block sm:hidden">
-            &copy; DomovROSA, {new Date().getFullYear()}
-          </p>
+          <div className="flex sm:hidden flex-col items-start justify-start gap-2.5">
+            <p>&copy; DomovROSA, {new Date().getFullYear()}</p>
+            <CookieSettingsLink className="text-sm text-black/70 transition-all hover:text-black/50 cursor-pointer text-left" />
+          </div>
         </div>
       </div>
     </footer>

@@ -7,8 +7,14 @@ import type { TGeneral } from "@/types/general";
 import { TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useCookieConsent } from "@/components/cookie-consent/use-cookie-consent";
+import { CookieSettingsLink } from "@/components/cookie-consent/cookie-settings-link";
 
 export function BillingContent({ general }: { general: TGeneral }) {
+  // Mapu Google Maps načítame až po udelení súhlasu s funkčnými cookies –
+  // vloženie iframe-u nastavuje cookies tretej strany (Google).
+  const mapsAllowed = useCookieConsent("functional");
+
   const locationURL =
     general.city && general.address
       ? encodeURI(
@@ -63,7 +69,35 @@ export function BillingContent({ general }: { general: TGeneral }) {
           </Link>
         </Button>
       </div>
-      <iframe className="w-full aspect-square rounded-[8px] max-w-[616px]" src={locationURL} />
+      {mapsAllowed ? (
+        <iframe
+          title="Mapa – poloha zariadenia"
+          className="w-full aspect-square rounded-[8px] max-w-[616px]"
+          src={locationURL}
+        />
+      ) : (
+        <div className="w-full aspect-square rounded-[8px] max-w-[616px] border border-black/10 bg-secondary/10 flex flex-col items-center justify-center gap-4 p-6 text-center">
+          <p className="text-sm md:text-base text-black/70 max-w-[420px]">
+            Mapa sa načíta zo služby Google Maps, ktorá vo vašom prehliadači
+            ukladá súbory cookies a spracúva vašu IP adresu (príjemca Google
+            Ireland Limited / Google LLC, možný prenos do USA). Zobrazíme ju až
+            po vašom súhlase s funkčnými cookies.
+          </p>
+          <CookieSettingsLink className="underline underline-offset-4 text-sm md:text-base cursor-pointer hover:text-black/50 transition-all" />
+          <Button asChild variant="outline" className="w-full sm:w-fit">
+            <Link
+              prefetch={false}
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                `${general.address ?? ""} ${general.city ?? ""}`.trim()
+              )}`}
+            >
+              Otvoriť mapu v novom okne
+            </Link>
+          </Button>
+        </div>
+      )}
     </TabsContent>
   );
 }

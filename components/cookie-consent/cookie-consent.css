@@ -1,23 +1,36 @@
 #cc-main {
-  /** Change font **/
-  --cc-font-family: var(--font-sans);
+  --cc-font-family: var(--font-poppins), var(--font-sans), sans-serif;
 
   --cc-bg: #ffffff;
   --cc-primary-color: black;
   --cc-secondary-color: black;
 
-  /** Change button primary color to black **/
+  /**
+   * Farby odvodzujeme cez color-mix, nie cez hsl() – premenné --primary
+   * a --secondary sú hex hodnoty, takže hsl(var(--primary) / 0.8) je
+   * neplatná hodnota a tlačidlo by pri hoveri stratilo pozadie aj text.
+   */
   --cc-btn-primary-bg: var(--primary);
-  --cc-btn-primary-color: hsl(var(--primary-foreground));
+  --cc-btn-primary-color: #000000;
   --cc-btn-primary-border-color: var(--primary);
-  --cc-btn-primary-hover-bg: hsl(var(--primary) / 0.8);
-  --cc-btn-primary-hover-border-color: hsl(var(--primary) / 0.8);
+  --cc-btn-primary-hover-bg: color-mix(in srgb, var(--primary) 82%, #000000);
+  --cc-btn-primary-hover-color: #000000;
+  --cc-btn-primary-hover-border-color: color-mix(
+    in srgb,
+    var(--primary) 82%,
+    #000000
+  );
 
   --cc-btn-secondary-bg: var(--secondary);
-  --cc-btn-secondary-color: var(--secondary-foreground);
+  --cc-btn-secondary-color: #000000;
   --cc-btn-secondary-border-color: var(--secondary);
-  --cc-btn-secondary-hover-bg: hsl(var(--secondary) / 0.8);
-  --cc-btn-secondary-hover-border-color: hsl(var(--secondary) / 0.8);
+  --cc-btn-secondary-hover-bg: color-mix(in srgb, var(--secondary) 82%, #000000);
+  --cc-btn-secondary-hover-color: #000000;
+  --cc-btn-secondary-hover-border-color: color-mix(
+    in srgb,
+    var(--secondary) 82%,
+    #000000
+  );
 
   --cc-separator-border-color: var(--border);
 
@@ -26,4 +39,52 @@
 
   /** Make the buttons a bit rounder **/
   --cc-btn-border-radius: 4px;
+}
+
+/**
+ * Poistka pre prehliadače bez podpory color-mix – bez nej by hover opäť
+ * spadol na priehľadné pozadie a biely text.
+ */
+@supports not (background: color-mix(in srgb, #000 50%, #fff)) {
+  #cc-main {
+    --cc-btn-primary-hover-bg: #b0c414;
+    --cc-btn-primary-hover-border-color: #b0c414;
+    --cc-btn-secondary-hover-bg: #8fbfd9;
+    --cc-btn-secondary-hover-border-color: #8fbfd9;
+  }
+}
+
+/**
+ * Tabuľky konkrétnych súborov cookies – knižnica ich na širokých modaloch
+ * zobrazuje ako klasickú tabuľku a na úzkych ako karty. Upravujeme len
+ * čitateľnosť, responzívne správanie necháme na knižnicu.
+ */
+#cc-main .pm__section-table {
+  line-height: 1.5;
+}
+
+#cc-main .pm__table-td,
+#cc-main .pm__table-th,
+#cc-main .pm__table-caption {
+  line-height: 1.5;
+}
+
+/** Označenie cookie odlíšime ako technický identifikátor. **/
+#cc-main .pm__table-tr .pm__table-td:first-child > div {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  word-break: break-word;
+}
+
+/** Odkazy v popisoch musia byť jasne rozoznateľné. **/
+#cc-main .pm__section-desc a,
+#cc-main .cm__desc a {
+  color: var(--cc-link-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/** Dlhšie informačné texty potrebujú vzdušnejšie riadkovanie. **/
+#cc-main .cm__desc,
+#cc-main .pm__section-desc {
+  line-height: 1.55;
 }
